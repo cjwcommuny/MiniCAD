@@ -1,5 +1,6 @@
 package state;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import model.Model;
 import shape.Rectangle;
 
@@ -16,8 +17,7 @@ public class ReadyToDrawSecondPointOfRectangle extends State {
     @Override
     public State mouseLeftClick(MouseEvent e) {
         Point currentPoint = e.getPoint();
-        Rectangle rectangle = (Rectangle) Model.getCurrentShape();
-        rectangle.setRightBottomCorner(currentPoint);
+        setRightCornerPointOfRectangle(currentPoint);
         return ReadyToDrawFirstPointOfRectangle.getInstance();
     }
 
@@ -30,9 +30,14 @@ public class ReadyToDrawSecondPointOfRectangle extends State {
     public State mouseMove(MouseEvent e) {
         Point currentPoint = e.getPoint();
         //TODO: assert?
-        Rectangle rectangle = (Rectangle) Model.getCurrentShape();
-        rectangle.setRightBottomCorner(currentPoint);
+        setRightCornerPointOfRectangle(currentPoint);
         return ReadyToDrawSecondPointOfRectangle.getInstance();
+    }
+
+    private void setRightCornerPointOfRectangle(Point point) {
+        Rectangle rectangle = (Rectangle) Model.getCurrentShape();
+        rectangle.setRightBottomCorner(point);
+        Model.shapeListChanged();
     }
 
     @Override

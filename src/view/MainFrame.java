@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class MainFrame extends JFrame {
     final private static int GRID_UNIT_SIZE = 100;
@@ -15,6 +17,12 @@ public class MainFrame extends JFrame {
     final private static int BUTTON_GRID_WIDTH = 1;
     final private static int WIDTH = GRID_UNIT_SIZE * (DRAWING_PANEL_GRID_WIDTH + BUTTON_GRID_WIDTH);
     final private static int HEIGHT = GRID_UNIT_SIZE * DRAWING_PANEL_GRID_HEIGHT;
+    final private static double DRAWING_PANEL_WEIGHT_X = 0.8;
+    final private static double DRAWING_PANEL_WEIGHT_Y = 1;
+    final static int DRAWING_PANEL_WIDTH = DRAWING_PANEL_GRID_WIDTH * GRID_UNIT_SIZE;
+    final static int DRAWING_PANEL_HEIGHT = DRAWING_PANEL_GRID_HEIGHT * GRID_UNIT_SIZE;
+    final private static double BUTTON_WEIGHT_X = 0.2;
+    final private static double BUTTON_WEIGHT_Y = 1;
 
     private DrawingPanel drawingPanel = new DrawingPanel();
     private ButtonForDrawing lineSegmentButton =
@@ -63,8 +71,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weightx = 1;
-        constraints.weighty = 1;
+        constraints.weightx = DRAWING_PANEL_WEIGHT_X;
+        constraints.weighty = DRAWING_PANEL_WEIGHT_Y;
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = DRAWING_PANEL_GRID_WIDTH;
@@ -76,8 +84,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weightx = 0.5;
-        constraints.weighty = 1;
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 0;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -88,7 +96,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weighty = 1;
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 1;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -99,7 +108,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weighty = 1;
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 2;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -110,7 +120,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weighty = 1;
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 3;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -121,7 +132,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weighty = 1;
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 4;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -132,7 +144,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weighty = 1;
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 5;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -143,7 +156,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weighty = 1;
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 6;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -154,7 +168,8 @@ public class MainFrame extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.weighty = 1;
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 7;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -165,9 +180,11 @@ public class MainFrame extends JFrame {
 
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
+        Model.addPropertyChangeListener(frame.new ShapeListChangeListener());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
-//        frame.setResizable(false);
+        frame.setMinimumSize(new Dimension(MainFrame.WIDTH, MainFrame.HEIGHT));
+//        frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
+        frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
     }
@@ -178,6 +195,14 @@ public class MainFrame extends JFrame {
             ButtonForDrawing button = (ButtonForDrawing) e.getSource();
             String methodName = button.getMethodName();
             Model.getCurrentState().invoke(methodName);
+        }
+    }
+
+    class ShapeListChangeListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+//            System.out.println("property changed");
+            drawingPanel.render();
         }
     }
 }

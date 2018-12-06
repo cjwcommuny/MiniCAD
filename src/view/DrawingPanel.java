@@ -15,7 +15,9 @@ import java.util.ListIterator;
 public class DrawingPanel extends JPanel {
     private static final Color NORMAL_COLOR = Color.BLACK;
     private static final Color ACTIVATED_COLOR = Color.RED;
-    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+    private BufferedImage image = new BufferedImage(MainFrame.DRAWING_PANEL_WIDTH,
+            MainFrame.DRAWING_PANEL_HEIGHT,
+            BufferedImage.TYPE_INT_ARGB);
     private Graphics2D imageGraphics = image.createGraphics();
 
     DrawingPanel() {
@@ -32,9 +34,13 @@ public class DrawingPanel extends JPanel {
     void render() {
         renderAllShapes();
         renderActivatedShape();
+//        imageGraphics.setColor(Color.BLACK);
+//        imageGraphics.setStroke(new BasicStroke());
+//        imageGraphics.drawLine(0, 0, 100, 100);
+        repaint();
     }
 
-    void renderAllShapes() {
+    private void renderAllShapes() {
         ListIterator<Shape> shapeListIterator = Model.getShapeListIterator();
         imageGraphics.setColor(NORMAL_COLOR);
         while (shapeListIterator.hasNext()) {
@@ -43,7 +49,7 @@ public class DrawingPanel extends JPanel {
         }
     }
 
-    void renderActivatedShape() {
+    private void renderActivatedShape() {
         imageGraphics.setColor(ACTIVATED_COLOR);
         Model.getCurrentShape().render(imageGraphics);
     }
@@ -55,7 +61,6 @@ public class DrawingPanel extends JPanel {
             State newState;
             if (SwingUtilities.isLeftMouseButton(e)) {
                 newState = Model.getCurrentState().mouseLeftClick(e);
-                Model.setCurrentState(newState);
             } else {
                 newState = Model.getCurrentState().mouseRightClick(e);
             }
@@ -78,6 +83,7 @@ public class DrawingPanel extends JPanel {
         @Override
         public void mouseMoved(MouseEvent e) {
             super.mouseMoved(e);
+            System.out.println(e.getPoint());
             State newState = Model.getCurrentState().mouseMove(e);
             Model.setCurrentState(newState);
         }

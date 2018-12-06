@@ -18,8 +18,13 @@ public class ReadyToDrawFirstPointOfRectangle extends State {
         Point currentPoint = e.getPoint();
         //TODO: should use different point?
         Rectangle rectangle = new Rectangle(currentPoint, new Point(currentPoint));
-        Model.addShape(rectangle);
+        addShape(rectangle);
         return ReadyToDrawSecondPointOfRectangle.getInstance();
+    }
+
+    private void addShape(Rectangle rectangle) {
+        Model.addShape(rectangle);
+        Model.shapeListChanged();
     }
 
     @Override

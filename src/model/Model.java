@@ -14,18 +14,30 @@ public class Model {
     private static State currentState = new Idle();
     private static Shape currentShape;
     private static List<Shape> shapeList= new LinkedList<>();
-    private PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+    private static PropertyChangeSupport listeners = new PropertyChangeSupport(Model.class);
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    public static void setShapeList(List<Shape> shapeList) {
+        Model.shapeList = shapeList;
+    }
+
+    public static List<Shape> getShapeList() {
+        return shapeList;
+    }
+
+    public static void addPropertyChangeListener(PropertyChangeListener listener) {
         listeners.addPropertyChangeListener(listener);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    public static void removePropertyChangeListener(PropertyChangeListener listener) {
         listeners.removePropertyChangeListener(listener);
     }
 
-    protected void firePropertyChange(String prop, Object oldValue, Object newValue) {
+    private static void firePropertyChange(String prop, Object oldValue, Object newValue) {
         listeners.firePropertyChange(prop, oldValue, newValue);
+    }
+
+    public static void shapeListChanged() {
+        firePropertyChange("shapeList", null, null);
     }
 
     public static ListIterator<Shape> getShapeListIterator() {

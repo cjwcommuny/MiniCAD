@@ -1,7 +1,10 @@
 package state;
 
 
+import model.Model;
+
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Method;
 
 //TODO: singleton ?
 abstract public class State {
@@ -50,8 +53,10 @@ abstract public class State {
 
     public void invoke(String methodName) {
         try {
-            getClass().getMethod(methodName);
-        } catch (NoSuchMethodException e) {
+            Method method = getClass().getMethod(methodName);
+            State newState = (State) method.invoke(this);
+            Model.setCurrentState(newState);
+        } catch (Exception e) {
             //TODO: need to change?
             System.err.println(e.getMessage());
         }
