@@ -1,6 +1,7 @@
 package view;
 
 import model.Model;
+import shape.Shape;
 import state.State;
 
 import javax.swing.*;
@@ -8,10 +9,43 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.image.BufferedImage;
+import java.util.ListIterator;
 
 public class DrawingPanel extends JPanel {
-    public DrawingPanel() {
+    private static final Color NORMAL_COLOR = Color.BLACK;
+    private static final Color ACTIVATED_COLOR = Color.RED;
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+    private Graphics2D imageGraphics = image.createGraphics();
+
+    DrawingPanel() {
         setBackground(Color.WHITE);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(image, null, 0, 0);
+    }
+
+    void render() {
+        renderAllShapes();
+        renderActivatedShape();
+    }
+
+    void renderAllShapes() {
+        ListIterator<Shape> shapeListIterator = Model.getShapeListIterator();
+        imageGraphics.setColor(NORMAL_COLOR);
+        while (shapeListIterator.hasNext()) {
+            Shape currentShape = shapeListIterator.next();
+            currentShape.render(imageGraphics);
+        }
+    }
+
+    void renderActivatedShape() {
+        imageGraphics.setColor(ACTIVATED_COLOR);
+        Model.getCurrentShape().render(imageGraphics);
     }
 
     MouseAdapter mouseAdapter = new MouseAdapter() {

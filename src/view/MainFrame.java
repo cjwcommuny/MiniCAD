@@ -7,12 +7,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class View extends JFrame {
+public class MainFrame extends JFrame {
     final private static int GRID_UNIT_SIZE = 100;
     final private static int BUTTON_NUM = 8;
     final private static int DRAWING_PANEL_GRID_WIDTH = BUTTON_NUM;
     final private static int DRAWING_PANEL_GRID_HEIGHT = DRAWING_PANEL_GRID_WIDTH;
-    final private static int BUTTON_GRID_WIDTH = 2;
+    final private static int BUTTON_GRID_WIDTH = 1;
     final private static int WIDTH = GRID_UNIT_SIZE * (DRAWING_PANEL_GRID_WIDTH + BUTTON_GRID_WIDTH);
     final private static int HEIGHT = GRID_UNIT_SIZE * DRAWING_PANEL_GRID_HEIGHT;
 
@@ -33,7 +33,7 @@ public class View extends JFrame {
             new ButtonForDrawing("Text Block", "textButtonPressed");
     private ButtonForDrawing saveButton = new ButtonForDrawing("Save", "saveButtonPressed");
 
-    public View() throws HeadlessException {
+    public MainFrame() throws HeadlessException {
         setTitle("MiniCAD");
         addComponentsToPane(getContentPane());
         addListener();
@@ -48,7 +48,7 @@ public class View extends JFrame {
     private void addComponentsToPane(Container pane) {
         pane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         pane.setLayout(new GridBagLayout());
-
+//        GridBagConstraints constraints = new GridBagConstraints();
         addDrawingPanel(pane);
         addLineSegment(pane);
         addRectangleButton(pane);
@@ -61,8 +61,10 @@ public class View extends JFrame {
 
     private void addDrawingPanel(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weightx = 1;
+        constraints.weighty = 1;
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = DRAWING_PANEL_GRID_WIDTH;
@@ -72,8 +74,10 @@ public class View extends JFrame {
 
     private void addLineSegment(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weightx = 0.5;
+        constraints.weighty = 1;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 0;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -82,8 +86,9 @@ public class View extends JFrame {
 
     private void addRectangleButton(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weighty = 1;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 1;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -92,8 +97,9 @@ public class View extends JFrame {
 
     private void addEllipseButton(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weighty = 1;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 2;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -102,8 +108,9 @@ public class View extends JFrame {
 
     private void addFilledRectangleButton(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weighty = 1;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 3;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -112,8 +119,9 @@ public class View extends JFrame {
 
     private void addFilledEllipseButton(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weighty = 1;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 4;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -122,8 +130,9 @@ public class View extends JFrame {
 
     private void addMultipleLineSegmentButton(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weighty = 1;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 5;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -132,8 +141,9 @@ public class View extends JFrame {
 
     private void addTextBlockButton(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weighty = 1;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 6;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
@@ -142,18 +152,21 @@ public class View extends JFrame {
 
     private void addSaveButton(Container pane) {
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.weighty = 1;
         constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
         constraints.gridy = 7;
         constraints.gridwidth = BUTTON_GRID_WIDTH;
         pane.add(saveButton, constraints);
     }
 
+
+
     public static void main(String[] args) {
-        View frame = new View();
+        MainFrame frame = new MainFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(View.WIDTH, View.HEIGHT);
+        frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 //        frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
