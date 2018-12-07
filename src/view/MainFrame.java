@@ -61,7 +61,8 @@ public class MainFrame extends JFrame {
         addButton(pane, 3, filledRectangleButton);
         addButton(pane, 4, filledEllipseButton);
         addButton(pane, 5, multipleLineSegmentButton);
-        addButton(pane, 6, saveButton);
+        addButton(pane, 6, textBlockButton);
+        addButton(pane, 7, saveButton);
     }
 
     private void addButton(Container pane, int index, ButtonForDrawing button) {

@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.awt.image.BufferedImage;
 import java.util.ListIterator;
 
 public class DrawingPanel extends JPanel {
@@ -42,8 +41,10 @@ public class DrawingPanel extends JPanel {
     }
 
     private void renderActivatedShape(Graphics2D imageGraphics) {
-        imageGraphics.setColor(ACTIVATED_COLOR);
-        Model.getCurrentShape().render(imageGraphics);
+        if (Model.getCurrentShape() != null) {
+            imageGraphics.setColor(ACTIVATED_COLOR);
+            Model.getCurrentShape().render(imageGraphics);
+        }
     }
 
     MouseAdapter mouseAdapter = new MouseAdapter() {
