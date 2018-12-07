@@ -44,6 +44,7 @@ public class DrawingPanel extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
+            requestFocusInWindow();
             State newState;
             if (SwingUtilities.isLeftMouseButton(e)) {
                 newState = Model.getCurrentState().mouseLeftClick(e);
@@ -78,6 +79,7 @@ public class DrawingPanel extends JPanel {
         @Override
         public void keyReleased(KeyEvent e) {
             Shape currentShape = Model.getCurrentShape();
+            System.out.println("key released");
             if (currentShape == null) {
                 return;
             }
