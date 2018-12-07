@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 public class Idle extends State {
     private static Idle thisState = new Idle();
 
-    static State getInstance() {
+    public static State getInstance() {
         return thisState;
     }
 

@@ -1,8 +1,9 @@
-package state;
+package state.drawing_rectangle_state;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import model.Model;
 import shape.Rectangle;
+import state.Idle;
+import state.State;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -10,7 +11,7 @@ import java.awt.event.MouseEvent;
 public class ReadyToDrawSecondPointOfRectangle extends State {
     private static ReadyToDrawSecondPointOfRectangle thisState = new ReadyToDrawSecondPointOfRectangle();
 
-    static State getInstance() {
+    public static State getInstance() {
         return thisState;
     }
 
@@ -36,7 +37,7 @@ public class ReadyToDrawSecondPointOfRectangle extends State {
 
     private void setRightCornerPointOfRectangle(Point point) {
         Rectangle rectangle = (Rectangle) Model.getCurrentShape();
-        rectangle.setRightBottomCorner(point);
+        rectangle.setSecondPoint(point);
         Model.shapeListChanged();
     }
 

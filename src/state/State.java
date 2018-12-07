@@ -2,6 +2,9 @@ package state;
 
 
 import model.Model;
+import shape.Shape;
+import state.drawing_ellipse_state.ReadToDrawFirstPointOfEllipse;
+import state.drawing_rectangle_state.ReadyToDrawFirstPointOfRectangle;
 
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
@@ -22,8 +25,7 @@ abstract public class State {
     }
 
     public State ellipseButtonPressed() {
-        //TODO
-        return null;
+        return ReadToDrawFirstPointOfEllipse.getInstance();
     }
 
     public State filledRectangleButtonPressed() {
@@ -60,5 +62,10 @@ abstract public class State {
             //TODO: need to change?
             System.err.println(e.getMessage());
         }
+    }
+
+    protected void addShape(Shape shape) {
+        Model.addShape(shape);
+        Model.shapeListChanged();
     }
 }
