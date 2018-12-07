@@ -19,8 +19,6 @@ public class MainFrame extends JFrame {
     final private static int HEIGHT = GRID_UNIT_SIZE * DRAWING_PANEL_GRID_HEIGHT;
     final private static double DRAWING_PANEL_WEIGHT_X = 0.8;
     final private static double DRAWING_PANEL_WEIGHT_Y = 1;
-    final static int DRAWING_PANEL_WIDTH = DRAWING_PANEL_GRID_WIDTH * GRID_UNIT_SIZE;
-    final static int DRAWING_PANEL_HEIGHT = DRAWING_PANEL_GRID_HEIGHT * GRID_UNIT_SIZE;
     final private static double BUTTON_WEIGHT_X = 0.2;
     final private static double BUTTON_WEIGHT_Y = 1;
 
@@ -41,7 +39,7 @@ public class MainFrame extends JFrame {
             new ButtonForDrawing("Text Block", "textButtonPressed");
     private ButtonForDrawing saveButton = new ButtonForDrawing("Save", "saveButtonPressed");
 
-    public MainFrame() throws HeadlessException {
+    MainFrame() throws HeadlessException {
         setTitle("MiniCAD");
         addComponentsToPane(getContentPane());
         addListener();
@@ -56,15 +54,26 @@ public class MainFrame extends JFrame {
     private void addComponentsToPane(Container pane) {
         pane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         pane.setLayout(new GridBagLayout());
-//        GridBagConstraints constraints = new GridBagConstraints();
         addDrawingPanel(pane);
-        addLineSegment(pane);
-        addRectangleButton(pane);
-        addEllipseButton(pane);
-        addFilledRectangleButton(pane);
-        addFilledEllipseButton(pane);
-        addMultipleLineSegmentButton(pane);
-        addSaveButton(pane);
+        addButton(pane, 0, lineSegmentButton);
+        addButton(pane, 1, rectangleButton);
+        addButton(pane, 2, ellipseButton);
+        addButton(pane, 3, filledRectangleButton);
+        addButton(pane, 4, filledEllipseButton);
+        addButton(pane, 5, multipleLineSegmentButton);
+        addButton(pane, 6, saveButton);
+    }
+
+    private void addButton(Container pane, int index, ButtonForDrawing button) {
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+
+        constraints.weightx = BUTTON_WEIGHT_X;
+        constraints.weighty = BUTTON_WEIGHT_Y;
+        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
+        constraints.gridy = index;
+        constraints.gridwidth = BUTTON_GRID_WIDTH;
+        pane.add(button, constraints);
     }
 
     private void addDrawingPanel(Container pane) {
@@ -80,110 +89,11 @@ public class MainFrame extends JFrame {
         pane.add(drawingPanel, constraints);
     }
 
-    private void addLineSegment(Container pane) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-
-        constraints.weightx = BUTTON_WEIGHT_X;
-        constraints.weighty = BUTTON_WEIGHT_Y;
-        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
-        constraints.gridy = 0;
-        constraints.gridwidth = BUTTON_GRID_WIDTH;
-        pane.add(lineSegmentButton, constraints);
-    }
-
-    private void addRectangleButton(Container pane) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-
-        constraints.weightx = BUTTON_WEIGHT_X;
-        constraints.weighty = BUTTON_WEIGHT_Y;
-        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
-        constraints.gridy = 1;
-        constraints.gridwidth = BUTTON_GRID_WIDTH;
-        pane.add(rectangleButton, constraints);
-    }
-
-    private void addEllipseButton(Container pane) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-
-        constraints.weightx = BUTTON_WEIGHT_X;
-        constraints.weighty = BUTTON_WEIGHT_Y;
-        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
-        constraints.gridy = 2;
-        constraints.gridwidth = BUTTON_GRID_WIDTH;
-        pane.add(ellipseButton, constraints);
-    }
-
-    private void addFilledRectangleButton(Container pane) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-
-        constraints.weightx = BUTTON_WEIGHT_X;
-        constraints.weighty = BUTTON_WEIGHT_Y;
-        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
-        constraints.gridy = 3;
-        constraints.gridwidth = BUTTON_GRID_WIDTH;
-        pane.add(filledRectangleButton, constraints);
-    }
-
-    private void addFilledEllipseButton(Container pane) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-
-        constraints.weightx = BUTTON_WEIGHT_X;
-        constraints.weighty = BUTTON_WEIGHT_Y;
-        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
-        constraints.gridy = 4;
-        constraints.gridwidth = BUTTON_GRID_WIDTH;
-        pane.add(filledEllipseButton, constraints);
-    }
-
-    private void addMultipleLineSegmentButton(Container pane) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-
-        constraints.weightx = BUTTON_WEIGHT_X;
-        constraints.weighty = BUTTON_WEIGHT_Y;
-        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
-        constraints.gridy = 5;
-        constraints.gridwidth = BUTTON_GRID_WIDTH;
-        pane.add(multipleLineSegmentButton, constraints);
-    }
-
-    private void addTextBlockButton(Container pane) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-
-        constraints.weightx = BUTTON_WEIGHT_X;
-        constraints.weighty = BUTTON_WEIGHT_Y;
-        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
-        constraints.gridy = 6;
-        constraints.gridwidth = BUTTON_GRID_WIDTH;
-        pane.add(textBlockButton, constraints);
-    }
-
-    private void addSaveButton(Container pane) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-
-        constraints.weightx = BUTTON_WEIGHT_X;
-        constraints.weighty = BUTTON_WEIGHT_Y;
-        constraints.gridx = DRAWING_PANEL_GRID_WIDTH;
-        constraints.gridy = 7;
-        constraints.gridwidth = BUTTON_GRID_WIDTH;
-        pane.add(saveButton, constraints);
-    }
-
-
-
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
         Model.addPropertyChangeListener(frame.new ShapeListChangeListener());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(MainFrame.WIDTH, MainFrame.HEIGHT));
-//        frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
@@ -201,7 +111,6 @@ public class MainFrame extends JFrame {
     class ShapeListChangeListener implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-//            System.out.println("property changed");
             drawingPanel.render();
         }
     }

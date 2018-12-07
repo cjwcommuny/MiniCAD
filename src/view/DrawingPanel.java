@@ -15,10 +15,6 @@ import java.util.ListIterator;
 public class DrawingPanel extends JPanel {
     private static final Color NORMAL_COLOR = Color.BLACK;
     private static final Color ACTIVATED_COLOR = Color.RED;
-    private BufferedImage image = new BufferedImage(MainFrame.DRAWING_PANEL_WIDTH,
-            MainFrame.DRAWING_PANEL_HEIGHT,
-            BufferedImage.TYPE_INT_ARGB);
-    private Graphics2D imageGraphics = image.createGraphics();
 
     DrawingPanel() {
         setBackground(Color.WHITE);
@@ -28,19 +24,15 @@ public class DrawingPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(image, null, 0, 0);
+        renderAllShapes(g2);
+        renderActivatedShape(g2);
     }
 
     void render() {
-        renderAllShapes();
-        renderActivatedShape();
-//        imageGraphics.setColor(Color.BLACK);
-//        imageGraphics.setStroke(new BasicStroke());
-//        imageGraphics.drawLine(0, 0, 100, 100);
         repaint();
     }
 
-    private void renderAllShapes() {
+    private void renderAllShapes(Graphics2D imageGraphics) {
         ListIterator<Shape> shapeListIterator = Model.getShapeListIterator();
         imageGraphics.setColor(NORMAL_COLOR);
         while (shapeListIterator.hasNext()) {
@@ -49,7 +41,7 @@ public class DrawingPanel extends JPanel {
         }
     }
 
-    private void renderActivatedShape() {
+    private void renderActivatedShape(Graphics2D imageGraphics) {
         imageGraphics.setColor(ACTIVATED_COLOR);
         Model.getCurrentShape().render(imageGraphics);
     }
