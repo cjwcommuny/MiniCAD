@@ -1,6 +1,11 @@
 package state;
 
+import model.Model;
+
+import java.awt.*;
+import shape.Shape;
 import java.awt.event.MouseEvent;
+import java.util.ListIterator;
 
 public class Idle extends State {
     private static Idle thisState = new Idle();
@@ -11,6 +16,18 @@ public class Idle extends State {
 
     @Override
     public State mouseLeftClick(MouseEvent e) {
+        Point point = e.getPoint();
+        ListIterator<Shape> listIterator = Model.getShapeListIterator();
+        while (listIterator.hasNext()) {
+            Shape shape = listIterator.next();
+            if (shape.isInShape(point)) {
+                Model.setCurrentShape(shape);
+                Model.shapeListChanged();
+                return new Idle();
+            }
+        }
+        Model.setCurrentShape(null);
+        Model.shapeListChanged();
         return new Idle();
     }
 

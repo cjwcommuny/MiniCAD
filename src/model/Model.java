@@ -6,15 +6,21 @@ import state.State;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
 public class Model {
+    public final static String SERIALIZE_EXTENSION = "ser";
     private static State currentState = new Idle();
     private static Shape currentShape;
     private static List<Shape> shapeList= new LinkedList<>();
     private static PropertyChangeSupport listeners = new PropertyChangeSupport(Model.class);
+
+    public static void setCurrentShape(Shape currentShape) {
+        Model.currentShape = currentShape;
+    }
 
     public static void setShapeList(List<Shape> shapeList) {
         Model.shapeList = shapeList;
@@ -64,5 +70,37 @@ public class Model {
     public static void removeShape() {
         shapeList.remove(currentShape);
         currentShape = null;
+    }
+
+    public static void saveShapes(String directory, String fileName) {
+        File file = new File(directory, fileName);
+        try {
+            FileOutputStream fileOut = new FileOutputStream(file);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(shapeList);
+            out.close();
+            fileOut.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void loadShapes(File file) {
+        try {
+            FileInputStream fileIn = new FileInputStream(file);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            List<Shape> newList = (List<Shape>) in.readObject();
+            //TODO: cannot cast
+            in.close();
+            fileIn.close();
+            shapeList.addAll(newList);
+            shapeListChanged();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            //TODO: open dialog to notify that cannot open file
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+
     }
 }

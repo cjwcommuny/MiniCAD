@@ -3,27 +3,32 @@ package view;
 import model.Model;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 
 public class MainFrame extends JFrame {
-    final private static int GRID_UNIT_SIZE = 100;
-    final private static int BUTTON_NUM = 9;
+    final private static int GRID_UNIT_WIDTH_SIZE = 100;
+    final private static int GRID_UNIT_HEIGHT_SIZE = 80;
+    final private static int BUTTON_NUM = 10;
     final private static int DRAWING_PANEL_GRID_WIDTH = BUTTON_NUM;
     final private static int DRAWING_PANEL_GRID_HEIGHT = DRAWING_PANEL_GRID_WIDTH;
     final private static int BUTTON_GRID_WIDTH = 1;
-    final private static int WIDTH = GRID_UNIT_SIZE * (DRAWING_PANEL_GRID_WIDTH + BUTTON_GRID_WIDTH);
-    final private static int HEIGHT = GRID_UNIT_SIZE * DRAWING_PANEL_GRID_HEIGHT;
+    final private static int WIDTH = GRID_UNIT_WIDTH_SIZE * (DRAWING_PANEL_GRID_WIDTH + BUTTON_GRID_WIDTH);
+    final private static int HEIGHT = GRID_UNIT_HEIGHT_SIZE * DRAWING_PANEL_GRID_HEIGHT;
     final private static double DRAWING_PANEL_WEIGHT_X = 0.8;
     final private static double DRAWING_PANEL_WEIGHT_Y = 1;
-    final private static double BUTTON_WEIGHT_X = 0.2;
+    final private static double BUTTON_WEIGHT_X = 0.1;
     final private static double BUTTON_WEIGHT_Y = 1;
 
     private DrawingPanel drawingPanel = new DrawingPanel();
     private ButtonGroup drawingButtonGroup = new ButtonGroup();
+    private ButtonForDrawing chooseModeButton =
+            new ButtonForDrawing("Choose Mode", "chooseModeButtonPressed");
     private ButtonForDrawing lineSegmentButton =
             new ButtonForDrawing("Line Segment", "lineButtonPressed");
     private ButtonForDrawing rectangleButton =
@@ -38,8 +43,8 @@ public class MainFrame extends JFrame {
             new ButtonForDrawing("Multiple Line Segment", "multipleLineButtonPressed");
     private ButtonForDrawing textBlockButton =
             new ButtonForDrawing("Text Block", "textButtonPressed");
-    private SaveButton saveButton = new SaveButton("Save", "saveButtonPressed");
-    private LoadButton loadButton = new LoadButton("Load", "loadButtonPressed");
+    private SaveButton saveButton = new SaveButton("Save"); //wonh't change state
+    private LoadButton loadButton = new LoadButton("Load"); //wonh't change state
 
     MainFrame() throws HeadlessException {
         setTitle("MiniCAD");
@@ -49,6 +54,7 @@ public class MainFrame extends JFrame {
     }
 
     private void addButtonsToGroup() {
+        drawingButtonGroup.add(chooseModeButton);
         drawingButtonGroup.add(lineSegmentButton);
         drawingButtonGroup.add(rectangleButton);
         drawingButtonGroup.add(ellipseButton);
@@ -61,23 +67,28 @@ public class MainFrame extends JFrame {
     private void addListener() {
         drawingPanel.addMouseListener(drawingPanel.mouseAdapter);
         drawingPanel.addMouseMotionListener(drawingPanel.mouseAdapter);
-        rectangleButton.addActionListener(new ButtonListener());
-        ellipseButton.addActionListener(new ButtonListener());
+        this.addKeyListener(drawingPanel.keyAdapter);
+        chooseModeButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        rectangleButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        ellipseButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        saveButton.addActionListener(new SaveFileButtonListener());
+        loadButton.addActionListener(new LoadFileButtonListener());
     }
 
     private void addComponentsToPane(Container pane) {
         pane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         pane.setLayout(new GridBagLayout());
         addDrawingPanel(pane);
-        addButton(pane, 0, lineSegmentButton);
-        addButton(pane, 1, rectangleButton);
-        addButton(pane, 2, ellipseButton);
-        addButton(pane, 3, filledRectangleButton);
-        addButton(pane, 4, filledEllipseButton);
-        addButton(pane, 5, multipleLineSegmentButton);
-        addButton(pane, 6, textBlockButton);
-        addButton(pane, 7, saveButton);
-        addButton(pane, 8, loadButton);
+        addButton(pane, 0, chooseModeButton);
+        addButton(pane, 1, lineSegmentButton);
+        addButton(pane, 2, rectangleButton);
+        addButton(pane, 3, ellipseButton);
+        addButton(pane, 4, filledRectangleButton);
+        addButton(pane, 5, filledEllipseButton);
+        addButton(pane, 6, multipleLineSegmentButton);
+        addButton(pane, 7, textBlockButton);
+        addButton(pane, 8, saveButton);
+        addButton(pane, 9, loadButton);
     }
 
     private void addButton(Container pane, int index, AbstractButton button) {
@@ -115,14 +126,9 @@ public class MainFrame extends JFrame {
         frame.setVisible(true);
     }
 
-    class ButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            ButtonForDrawing button = (ButtonForDrawing) e.getSource();
-            String methodName = button.getMethodName();
-            Model.getCurrentState().invoke(methodName);
-        }
-    }
+//    public void popupDialog(String message) {
+//
+//    }
 
     class ShapeListChangeListener implements PropertyChangeListener {
         @Override
@@ -130,4 +136,45 @@ public class MainFrame extends JFrame {
             drawingPanel.render();
         }
     }
+
+    class SaveFileButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter =
+                    new FileNameExtensionFilter("Shape list serialization file (*.ser)",
+                            Model.SERIALIZE_EXTENSION);
+            chooser.addChoosableFileFilter(filter);
+            chooser.setAcceptAllFileFilterUsed(false);
+            int returnValueOfDialog = chooser.showSaveDialog(MainFrame.this);
+            if (returnValueOfDialog == JFileChooser.APPROVE_OPTION) {
+                String fileName = chooser.getSelectedFile().getName();
+                if (!fileName.endsWith(Model.SERIALIZE_EXTENSION)) {
+                    fileName = fileName + '.' + Model.SERIALIZE_EXTENSION;
+                }
+                String directory = chooser.getCurrentDirectory().toString();
+                Model.saveShapes(directory, fileName);
+            }
+        }
+    }
+
+    class LoadFileButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter =
+                    new FileNameExtensionFilter("Shape list serialization file (*.ser)",
+                            Model.SERIALIZE_EXTENSION);
+            chooser.addChoosableFileFilter(filter);
+            chooser.setAcceptAllFileFilterUsed(false);
+            int returnValueOfDialog = chooser.showOpenDialog(MainFrame.this);
+            if (returnValueOfDialog == JFileChooser.APPROVE_OPTION) {
+                File file = chooser.getSelectedFile();
+                Model.loadShapes(file);
+            }
+        }
+    }
+
+
 }

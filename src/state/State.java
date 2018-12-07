@@ -15,6 +15,10 @@ abstract public class State {
     abstract public State mouseRightClick(MouseEvent e);
     abstract public State mouseMove(MouseEvent e);
 
+    public State chooseModeButtonPressed() {
+        return Idle.getInstance();
+    }
+
     public State lineButtonPressed() {
         //TODO
         return null;
@@ -45,15 +49,6 @@ abstract public class State {
 
     public State textButtonPressed() {
         //TODO
-        return null;
-    }
-
-    public State saveButtonPressed() {
-        //TODO
-        return null;
-    }
-
-    public State loadButtonPressed() {
         return null;
     }
 

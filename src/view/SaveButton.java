@@ -1,12 +1,11 @@
 package view;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SaveButton extends JButton {
-    private String methodName;
-
-    public SaveButton(String text, String methodName) {
+    public SaveButton(String text) {
         super(text);
-        this.methodName = methodName;
     }
 }

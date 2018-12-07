@@ -6,15 +6,10 @@ import state.State;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
+import java.awt.event.*;
 import java.util.ListIterator;
 
 public class DrawingPanel extends JPanel {
-    private static final Color NORMAL_COLOR = Color.BLACK;
-    private static final Color ACTIVATED_COLOR = Color.RED;
-
     DrawingPanel() {
         setBackground(Color.WHITE);
     }
@@ -33,17 +28,15 @@ public class DrawingPanel extends JPanel {
 
     private void renderAllShapes(Graphics2D imageGraphics) {
         ListIterator<Shape> shapeListIterator = Model.getShapeListIterator();
-        imageGraphics.setColor(NORMAL_COLOR);
         while (shapeListIterator.hasNext()) {
             Shape currentShape = shapeListIterator.next();
-            currentShape.render(imageGraphics);
+            currentShape.render(imageGraphics, false);
         }
     }
 
     private void renderActivatedShape(Graphics2D imageGraphics) {
         if (Model.getCurrentShape() != null) {
-            imageGraphics.setColor(ACTIVATED_COLOR);
-            Model.getCurrentShape().render(imageGraphics);
+            Model.getCurrentShape().render(imageGraphics, true);
         }
     }
 
@@ -76,9 +69,43 @@ public class DrawingPanel extends JPanel {
         @Override
         public void mouseMoved(MouseEvent e) {
             super.mouseMoved(e);
-//            System.out.println(e.getPoint());
             State newState = Model.getCurrentState().mouseMove(e);
             Model.setCurrentState(newState);
+        }
+    };
+
+    KeyAdapter keyAdapter = new KeyAdapter() {
+        @Override
+        public void keyReleased(KeyEvent e) {
+            Shape currentShape = Model.getCurrentShape();
+            if (currentShape == null) {
+                return;
+            }
+            super.keyTyped(e);
+            char keyChar = e.getKeyChar();
+            switch (keyChar) {
+                case '1':
+                    //default color
+                    currentShape.setColor(Shape.NORMAL_COLOR);
+                    break;
+                case '2':
+                    //red
+                    currentShape.setColor(Color.RED);
+                    break;
+                case '3':
+                    //blue
+                    currentShape.setColor(Color.BLUE);
+                    break;
+                case '4':
+                    //yellow
+                    currentShape.setColor(Color.YELLOW);
+                    break;
+                default:
+                    //default color
+                    currentShape.setColor(Shape.NORMAL_COLOR);
+                    break;
+            }
+            Model.shapeListChanged();
         }
     };
 }

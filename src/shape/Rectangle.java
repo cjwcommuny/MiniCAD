@@ -24,13 +24,18 @@ public class Rectangle extends Shape {
     }
 
     @Override
-    public void render(Graphics2D imageGraphics) {
+    public void render(Graphics2D imageGraphics, boolean isActivated) {
+        super.render(imageGraphics, isActivated);
         int width = rightBottomCorner.x - leftTopCorner.x;
         int height = rightBottomCorner.y - leftTopCorner.y;
         imageGraphics.drawRect(leftTopCorner.x, leftTopCorner.y, width, height);
-//        imageGraphics.drawLine(leftTopCorner.x, leftTopCorner.y, rightBottomCorner.x, leftTopCorner.y);
-//        imageGraphics.drawLine(rightBottomCorner.x, leftTopCorner.y, rightBottomCorner.x, rightBottomCorner.y);
-//        imageGraphics.drawLine(rightBottomCorner.x, rightBottomCorner.y, leftTopCorner.x, rightBottomCorner.y);
-//        imageGraphics.drawLine(leftTopCorner.x, rightBottomCorner.y, leftTopCorner.x, leftTopCorner.y);
+    }
+
+    @Override
+    public boolean isInShape(Point point) {
+        return point.x >= leftTopCorner.x &&
+                point.x <= rightBottomCorner.x &&
+                point.y >= leftTopCorner.y &&
+                point.y <= rightBottomCorner.y;
     }
 }
