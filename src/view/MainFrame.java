@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 
 public class MainFrame extends JFrame {
     final private static int GRID_UNIT_SIZE = 100;
-    final private static int BUTTON_NUM = 8;
+    final private static int BUTTON_NUM = 9;
     final private static int DRAWING_PANEL_GRID_WIDTH = BUTTON_NUM;
     final private static int DRAWING_PANEL_GRID_HEIGHT = DRAWING_PANEL_GRID_WIDTH;
     final private static int BUTTON_GRID_WIDTH = 1;
@@ -23,6 +23,7 @@ public class MainFrame extends JFrame {
     final private static double BUTTON_WEIGHT_Y = 1;
 
     private DrawingPanel drawingPanel = new DrawingPanel();
+    private ButtonGroup drawingButtonGroup = new ButtonGroup();
     private ButtonForDrawing lineSegmentButton =
             new ButtonForDrawing("Line Segment", "lineButtonPressed");
     private ButtonForDrawing rectangleButton =
@@ -37,12 +38,24 @@ public class MainFrame extends JFrame {
             new ButtonForDrawing("Multiple Line Segment", "multipleLineButtonPressed");
     private ButtonForDrawing textBlockButton =
             new ButtonForDrawing("Text Block", "textButtonPressed");
-    private ButtonForDrawing saveButton = new ButtonForDrawing("Save", "saveButtonPressed");
+    private SaveButton saveButton = new SaveButton("Save", "saveButtonPressed");
+    private LoadButton loadButton = new LoadButton("Load", "loadButtonPressed");
 
     MainFrame() throws HeadlessException {
         setTitle("MiniCAD");
+        addButtonsToGroup();
         addComponentsToPane(getContentPane());
         addListener();
+    }
+
+    private void addButtonsToGroup() {
+        drawingButtonGroup.add(lineSegmentButton);
+        drawingButtonGroup.add(rectangleButton);
+        drawingButtonGroup.add(ellipseButton);
+        drawingButtonGroup.add(filledRectangleButton);
+        drawingButtonGroup.add(filledEllipseButton);
+        drawingButtonGroup.add(multipleLineSegmentButton);
+        drawingButtonGroup.add(textBlockButton);
     }
 
     private void addListener() {
@@ -64,9 +77,10 @@ public class MainFrame extends JFrame {
         addButton(pane, 5, multipleLineSegmentButton);
         addButton(pane, 6, textBlockButton);
         addButton(pane, 7, saveButton);
+        addButton(pane, 8, loadButton);
     }
 
-    private void addButton(Container pane, int index, ButtonForDrawing button) {
+    private void addButton(Container pane, int index, AbstractButton button) {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
 

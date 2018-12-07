@@ -3,19 +3,14 @@ package view;
 import javax.swing.*;
 
 //TODO: needed?
-public class ButtonForDrawing extends JToggleButton {
-    private boolean isDone = false;
+class ButtonForDrawing extends JToggleButton {
     private String methodName;
 
-    public boolean isDone() {
-        return isDone;
-    }
-
-    public String getMethodName() {
+    String getMethodName() {
         return methodName;
     }
 
-    public ButtonForDrawing(String text, String methodName) {
+    ButtonForDrawing(String text, String methodName) {
         super(text);
         this.methodName = methodName;
     }

@@ -53,6 +53,10 @@ abstract public class State {
         return null;
     }
 
+    public State loadButtonPressed() {
+        return null;
+    }
+
     public void invoke(String methodName) {
         try {
             Method method = getClass().getMethod(methodName);
