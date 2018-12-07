@@ -76,7 +76,7 @@ public class DrawingPanel extends JPanel {
         @Override
         public void mouseMoved(MouseEvent e) {
             super.mouseMoved(e);
-            System.out.println(e.getPoint());
+//            System.out.println(e.getPoint());
             State newState = Model.getCurrentState().mouseMove(e);
             Model.setCurrentState(newState);
         }

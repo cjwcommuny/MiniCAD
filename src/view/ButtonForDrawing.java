@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 
 //TODO: needed?
-public class ButtonForDrawing extends JButton {
+public class ButtonForDrawing extends JToggleButton {
     private boolean isDone = false;
     private String methodName;
 

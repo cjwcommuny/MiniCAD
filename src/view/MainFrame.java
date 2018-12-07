@@ -21,6 +21,7 @@ public class MainFrame extends JFrame {
     final private static double DRAWING_PANEL_WEIGHT_Y = 1;
     final private static double BUTTON_WEIGHT_X = 0.2;
     final private static double BUTTON_WEIGHT_Y = 1;
+    private ButtonForDrawing currentPressedButton = null;
 
     private DrawingPanel drawingPanel = new DrawingPanel();
     private ButtonForDrawing lineSegmentButton =
