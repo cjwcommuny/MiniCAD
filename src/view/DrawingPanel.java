@@ -105,58 +105,9 @@ public class DrawingPanel extends JPanel {
     KeyAdapter keyAdapter = new KeyAdapter() {
         @Override
         public void keyReleased(KeyEvent e) {
-            Shape currentShape = Model.getCurrentShape();
-            System.out.println("key released");
-            if (currentShape == null) {
-                return;
-            }
-            super.keyTyped(e);
-            int keyCode = e.getKeyCode();
-            switch (keyCode) {
-                case VK_1:
-                    //default color
-                    currentShape.setColor(Shape.NORMAL_COLOR);
-                    break;
-                case VK_2:
-                    //red
-                    currentShape.setColor(Color.RED);
-                    break;
-                case VK_3:
-                    //blue
-                    currentShape.setColor(Color.BLUE);
-                    break;
-                case VK_4:
-                    //yellow
-                    currentShape.setColor(Color.YELLOW);
-                    break;
-                case VK_BACK_SPACE: case VK_DELETE:
-                    Model.removeShape();
-                    break;
-                case VK_F1:
-                    Model.incrementLineWidthOfCurrentShape();
-                    break;
-                case VK_F2:
-                    Model.decrementLineWidthOfCurrentShape();
-                    break;
-                case VK_UP:
-                    Model.moveShapeUp();
-                    break;
-                case VK_DOWN:
-                    Model.moveShapeDown();
-                    break;
-                case VK_LEFT:
-                    Model.moveShapeLeft();
-                    break;
-                case VK_RIGHT:
-                    Model.moveShapeRight();
-                    break;
-                default:
-                    //default color
-                    System.out.println(keyCode);
-                    currentShape.setColor(Shape.NORMAL_COLOR);
-                    break;
-            }
-            Model.shapeListChanged();
+            super.keyReleased(e);
+            State newState = Model.getCurrentState().keyButtonReleased(e.getKeyCode());
+            Model.setCurrentState(newState);
         }
     };
 }
