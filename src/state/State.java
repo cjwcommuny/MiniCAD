@@ -3,6 +3,7 @@ package state;
 
 import model.Model;
 import shape.Shape;
+import shape.Text;
 import state.drawing_ellipse_state.ReadyToDrawFirstPointOfEllipse;
 import state.drawing_filled_ellipse.ReadyToDrawFirstPointOfFilledEllipse;
 import state.drawing_filled_rectangle.ReadyToDrawFirstPointOfFilledRectangle;
@@ -94,6 +95,21 @@ abstract public class State {
                 break;
             case VK_F2:
                 Model.decrementLineWidthOfCurrentShape();
+                break;
+            case VK_F7:
+                if (currentShape.getClass() == Text.class) {
+//                    System.out.println("text");
+                    Text textShape = (Text) currentShape;
+                    textShape.setFontStyle("Times");
+                    Model.shapeListChanged();
+                }
+                break;
+            case VK_F8:
+                if (currentShape.getClass() == Text.class) {
+                    Text textShape = (Text) currentShape;
+                    textShape.setFontStyle("Menlo");
+                    Model.shapeListChanged();
+                }
                 break;
             default:
                 break;

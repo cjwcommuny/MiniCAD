@@ -9,11 +9,16 @@ public class Text extends Shape {
     private String fontName = "Menlo";
     private int fontStyle = Font.PLAIN;
     private Font font = new Font(fontName, fontStyle, fontSize);
-    private String text = "this is a text box";//new String();
+    private String text = "this is a text box";
     private static int textFramePadding = 5;
     private static int textFrameStrokeLineWidth = 1;
     private Rectangle2D textRectangle;
     private Rectangle2D rectangleFrame;
+
+    public void setFontStyle(String fontName) {
+        this.fontName = fontName;
+        this.font = new Font(fontName, fontStyle, fontSize);
+    }
 
     public Text(Point position) {
         this.position = position;
@@ -58,10 +63,6 @@ public class Text extends Shape {
                 textRectangle.getWidth() + 2 * textFramePadding,
                 textRectangle.getHeight() + 2 * textFramePadding
         );
-//        rectangleFrame = new Rectangle2D.Double(position.x,
-//                position.y - textRectangle.getHeight(),
-//                textRectangle.getWidth(),
-//                textRectangle.getHeight());
         imageGraphics.setFont(font);
         imageGraphics.drawString(text, position.x, position.y);
         if (isActivated) {

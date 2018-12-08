@@ -40,14 +40,20 @@ public class LineSegment extends Shape {
 
     @Override
     public void changeSize(double rate) {
-        Point center = new Point(
-                (firstPoint.x + secondPoint.x) / 2,
-                (firstPoint.y + secondPoint.y) / 2
-        );
-        firstPoint.x = (int) ((firstPoint.x - center.x) * (1 + rate)) + center.x;
-        firstPoint.y = (int) ((firstPoint.y - center.y) * (1 + rate)) + center.y;
-        secondPoint.x = (int) ((secondPoint.x - center.x) * (1 + rate)) + center.x;
-        secondPoint.y = (int) ((secondPoint.y - center.y) * (1 + rate)) + center.y;
+//        Point center = new Point(
+//                (firstPoint.x + secondPoint.x) / 2,
+//                (firstPoint.y + secondPoint.y) / 2
+//        );
+//        double tan = ((double) firstPoint.y - secondPoint.y) / (firstPoint.x - secondPoint.x);
+//        firstPoint.x = (int) ((firstPoint.x - center.x) * (1 + rate)) + center.x;
+//        firstPoint.y = (int) ((firstPoint.x - center.x) * tan) + center.y;
+//        secondPoint.x = (int) ((secondPoint.x - center.x) * (1 + rate)) + center.x;
+//        secondPoint.y = (int) ((secondPoint.x - center.x) * tan) + center.y;
+        double tan = ((double) firstPoint.y - secondPoint.y) / (firstPoint.x - secondPoint.x);
+        double tempSecondPointX = firstPoint.x + (secondPoint.x - firstPoint.x) * (1 + rate);
+        secondPoint.y = firstPoint.y + (int) ((tempSecondPointX - firstPoint.x) * tan);
+        secondPoint.x = (int) tempSecondPointX;
+        System.out.println(tan);
     }
 
     @Override

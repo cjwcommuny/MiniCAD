@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import java.util.ListIterator;
 
 public class Idle extends State {
+    //a flag to mark shape has been dragged
+    private boolean dragFlag = false;
+
     private static Idle thisState = new Idle();
 
     public static State getInstance() {
@@ -16,7 +19,10 @@ public class Idle extends State {
 
     @Override
     public State mouseDragged(MouseEvent e, Point direction) {
-        findFocusShape(e);
+        if (!dragFlag) {
+            findFocusShape(e);
+            dragFlag = true;
+        }
         Shape shape = Model.getCurrentShape();
         if (shape != null) {
             shape.move(direction);
@@ -27,6 +33,7 @@ public class Idle extends State {
 
     @Override
     public State mouseLeftClick(MouseEvent e) {
+        dragFlag = false;
         findFocusShape(e);
         Model.shapeListChanged();
         return new Idle();

@@ -41,6 +41,12 @@ public class FinishInputTextState extends State {
             textShape.setText(originalText + " ");
         } else if ((keyCode >= VK_0 && keyCode <= VK_9) || (keyCode >= VK_A && keyCode <= VK_Z)) {
             textShape.setText(originalText + keyString.toLowerCase());
+        } else if (keyCode == VK_F7) {
+            textShape.setFontStyle("Times");
+            Model.shapeListChanged();
+        } else if (keyCode == VK_F8) {
+            textShape.setFontStyle("Menlo");
+            Model.shapeListChanged();
         }
         Model.shapeListChanged();
         return getInstance();
