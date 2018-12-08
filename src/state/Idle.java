@@ -15,6 +15,16 @@ public class Idle extends State {
     }
 
     @Override
+    public State mouseDragged(Point direction) {
+        Shape shape = Model.getCurrentShape();
+        if (shape != null) {
+            shape.move(direction);
+        }
+        Model.shapeListChanged();
+        return getInstance();
+    }
+
+    @Override
     public State mouseLeftClick(MouseEvent e) {
         Point point = e.getPoint();
         ListIterator<Shape> listIterator = Model.getShapeListIterator();

@@ -12,6 +12,9 @@ import java.util.ListIterator;
 import static java.awt.event.KeyEvent.*;
 
 public class DrawingPanel extends JPanel {
+    private Point start = new Point();
+    private Point end = new Point();
+
     DrawingPanel() {
         setBackground(Color.WHITE);
     }
@@ -64,9 +67,27 @@ public class DrawingPanel extends JPanel {
         }
 
         @Override
+        public void mousePressed(MouseEvent e) {
+            super.mousePressed(e);
+            end = e.getPoint();
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            super.mouseReleased(e);
+            start = null;
+            end = null;
+        }
+
+        @Override
         public void mouseDragged(MouseEvent e) {
             super.mouseDragged(e);
-            //TODO
+            start = end;
+            end = e.getPoint();
+            State newState = Model.getCurrentState().mouseDragged(
+                    new Point(end.x - start.x, end.y - start.y)
+            );
+            Model.setCurrentState(newState);
         }
 
         @Override

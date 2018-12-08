@@ -1,11 +1,13 @@
 package state;
 
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import model.Model;
 import shape.Shape;
 import state.drawing_ellipse_state.ReadToDrawFirstPointOfEllipse;
 import state.drawing_rectangle_state.ReadyToDrawFirstPointOfRectangle;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
 
@@ -50,6 +52,10 @@ abstract public class State {
     public State textButtonPressed() {
         //TODO
         return null;
+    }
+
+    public State mouseDragged(Point direction) {
+        return this;
     }
 
     public void invoke(String methodName) {
