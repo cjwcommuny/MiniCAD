@@ -15,7 +15,8 @@ public class Idle extends State {
     }
 
     @Override
-    public State mouseDragged(Point direction) {
+    public State mouseDragged(MouseEvent e, Point direction) {
+        findFocusShape(e);
         Shape shape = Model.getCurrentShape();
         if (shape != null) {
             shape.move(direction);
@@ -26,19 +27,27 @@ public class Idle extends State {
 
     @Override
     public State mouseLeftClick(MouseEvent e) {
+        findFocusShape(e);
+        Model.shapeListChanged();
+        return new Idle();
+    }
+
+    private void findFocusShape(MouseEvent e) {
         Point point = e.getPoint();
         ListIterator<Shape> listIterator = Model.getShapeListIterator();
+        boolean findFocus = false;
         while (listIterator.hasNext()) {
             Shape shape = listIterator.next();
             if (shape.isInShape(point)) {
                 Model.setCurrentShape(shape);
                 Model.shapeListChanged();
-                return new Idle();
+                findFocus = true;
+                break;
             }
         }
-        Model.setCurrentShape(null);
-        Model.shapeListChanged();
-        return new Idle();
+        if (!findFocus) {
+            Model.setCurrentShape(null);
+        }
     }
 
     @Override

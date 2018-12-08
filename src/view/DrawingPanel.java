@@ -88,6 +88,7 @@ public class DrawingPanel extends JPanel {
             start = end;
             end = e.getPoint();
             State newState = Model.getCurrentState().mouseDragged(
+                    e,
                     new Point(end.x - start.x, end.y - start.y)
             );
             Model.setCurrentState(newState);

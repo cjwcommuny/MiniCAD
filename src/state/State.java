@@ -39,7 +39,6 @@ abstract public class State {
     }
 
     public State filledRectangleButtonPressed() {
-//        System.out.println("filled rectangle button pressed");
         return ReadyToDrawFirstPointOfFilledRectangle.getInstance();
     }
 
@@ -58,7 +57,7 @@ abstract public class State {
         return null;
     }
 
-    public State mouseDragged(Point direction) {
+    public State mouseDragged(MouseEvent e, Point direction) {
         return this;
     }
 
