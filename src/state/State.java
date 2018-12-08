@@ -7,6 +7,7 @@ import state.drawing_ellipse_state.ReadyToDrawFirstPointOfEllipse;
 import state.drawing_filled_ellipse.ReadyToDrawFirstPointOfFilledEllipse;
 import state.drawing_filled_rectangle.ReadyToDrawFirstPointOfFilledRectangle;
 import state.drawing_line_state.ReadyToDrawFirstPointOfLine;
+import state.drawing_multipleline_state.ReadyToDrawInitialPointOfMutipleLine;
 import state.drawing_rectangle_state.ReadyToDrawFirstPointOfRectangle;
 import state.drawing_text_state.ReadyToInputTextState;
 
@@ -50,8 +51,7 @@ abstract public class State {
     }
 
     public State multipleLineButtonPressed() {
-        //TODO
-        return null;
+        return ReadyToDrawInitialPointOfMutipleLine.getInstance();
     }
 
     public State textButtonPressed() {
