@@ -13,8 +13,8 @@ import java.io.File;
 
 public class MainFrame extends JFrame {
     final private static int GRID_UNIT_WIDTH_SIZE = 100;
-    final private static int GRID_UNIT_HEIGHT_SIZE = 80;
-    final private static int BUTTON_NUM = 10;
+    final private static int GRID_UNIT_HEIGHT_SIZE = 70;
+    final private static int BUTTON_NUM = 11;
     final private static int DRAWING_PANEL_GRID_WIDTH = BUTTON_NUM;
     final private static int DRAWING_PANEL_GRID_HEIGHT = DRAWING_PANEL_GRID_WIDTH;
     final private static int BUTTON_GRID_WIDTH = 1;
@@ -41,6 +41,8 @@ public class MainFrame extends JFrame {
             new ButtonForDrawing("Filled Ellipse", "filledEllipseButtonPressed");
     private ButtonForDrawing multipleLineSegmentButton =
             new ButtonForDrawing("Multiple Line Segment", "multipleLineButtonPressed");
+    private ButtonForDrawing polygonButton =
+            new ButtonForDrawing("Polygon", "polygonButtonPressed");
     private ButtonForDrawing textBlockButton =
             new ButtonForDrawing("Text Block", "textButtonPressed");
     private SaveButton saveButton = new SaveButton("Save"); //wonh't change state
@@ -61,6 +63,7 @@ public class MainFrame extends JFrame {
         drawingButtonGroup.add(filledRectangleButton);
         drawingButtonGroup.add(filledEllipseButton);
         drawingButtonGroup.add(multipleLineSegmentButton);
+        drawingButtonGroup.add(polygonButton);
         drawingButtonGroup.add(textBlockButton);
     }
 
@@ -76,6 +79,7 @@ public class MainFrame extends JFrame {
         filledRectangleButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
         filledEllipseButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
         multipleLineSegmentButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        polygonButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
         textBlockButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
         saveButton.addActionListener(new SaveFileButtonListener());
         loadButton.addActionListener(new LoadFileButtonListener());
@@ -92,9 +96,10 @@ public class MainFrame extends JFrame {
         addButton(pane, 4, filledRectangleButton);
         addButton(pane, 5, filledEllipseButton);
         addButton(pane, 6, multipleLineSegmentButton);
-        addButton(pane, 7, textBlockButton);
-        addButton(pane, 8, saveButton);
-        addButton(pane, 9, loadButton);
+        addButton(pane, 7, polygonButton);
+        addButton(pane, 8, textBlockButton);
+        addButton(pane, 9, saveButton);
+        addButton(pane, 10, loadButton);
     }
 
     private void addButton(Container pane, int index, AbstractButton button) {

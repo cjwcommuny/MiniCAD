@@ -4,8 +4,8 @@ import java.awt.*;
 import java.util.List;
 import java.util.LinkedList;
 
-public class MutipleLine extends Shape {
-    private List<LineSegment> lineList = new LinkedList<>();
+public class MultipleLines extends Shape {
+    protected List<LineSegment> lineList = new LinkedList<>();
 
     public void addLine(LineSegment line) {
         lineList.add(line);

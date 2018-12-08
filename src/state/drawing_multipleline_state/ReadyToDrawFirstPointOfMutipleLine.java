@@ -2,7 +2,7 @@ package state.drawing_multipleline_state;
 
 import model.Model;
 import shape.LineSegment;
-import shape.MutipleLine;
+import shape.MultipleLines;
 import state.State;
 
 import java.awt.*;
@@ -21,8 +21,8 @@ public class ReadyToDrawFirstPointOfMutipleLine extends State {
     @Override
     public State mouseLeftClick(MouseEvent e) {
         Point point = e.getPoint();
-        MutipleLine mutipleLine = (MutipleLine) Model.getCurrentShape();
-        mutipleLine.addLine(new LineSegment(point, new Point(point)));
+        MultipleLines multipleLines = (MultipleLines) Model.getCurrentShape();
+        multipleLines.addLine(new LineSegment(point, new Point(point)));
         return ReadyToDrawSecondPointOfMutipleLine.getInstance();
     }
 
@@ -35,8 +35,8 @@ public class ReadyToDrawFirstPointOfMutipleLine extends State {
     public State mouseMove(MouseEvent e) {
         //TODO: redundant
         Point point = e.getPoint();
-        MutipleLine mutipleLine = (MutipleLine) Model.getCurrentShape();
-        LineSegment line = mutipleLine.getLastLine();
+        MultipleLines multipleLines = (MultipleLines) Model.getCurrentShape();
+        LineSegment line = multipleLines.getLastLine();
         line.setSecondPoint(point);
         Model.shapeListChanged();
         return getInstance();

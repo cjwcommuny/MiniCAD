@@ -1,14 +1,15 @@
-package state.drawing_multipleline_state;
+package state.drawing_polygon_state;
 
 import shape.LineSegment;
-import shape.MultipleLines;
+import shape.Polygon;
 import state.State;
+import state.drawing_multipleline_state.ReadyToDrawInitialPointOfMutipleLine;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class ReadyToDrawInitialPointOfMutipleLine extends State {
-    private static State thisState = new ReadyToDrawInitialPointOfMutipleLine();
+public class ReadyToDrawInitialPointOfPolygon extends State {
+    private static State thisState = new ReadyToDrawInitialPointOfPolygon();
 
     public static State getInstance() {
         return thisState;
@@ -18,10 +19,10 @@ public class ReadyToDrawInitialPointOfMutipleLine extends State {
     public State mouseLeftClick(MouseEvent e) {
         Point point = e.getPoint();
         LineSegment line = new LineSegment(point, new Point(point));
-        MultipleLines multipleLines = new MultipleLines();
-        multipleLines.addLine(line);
-        addShape(multipleLines);
-        return ReadyToDrawFirstPointOfMutipleLine.getInstance();
+        Polygon polygon = new Polygon();
+        polygon.addLine(line);
+        addShape(polygon);
+        return ReadyToDrawFirstPointOfPolygon.getInstance();
     }
 
     @Override

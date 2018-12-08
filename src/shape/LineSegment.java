@@ -6,6 +6,14 @@ public class LineSegment extends Shape {
     private Point firstPoint;
     private Point secondPoint;
 
+    Point getFirstPoint() {
+        return firstPoint;
+    }
+
+    public Point getSecondPoint() {
+        return secondPoint;
+    }
+
     @Override
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         super.render(imageGraphics, isActivated);
