@@ -1,10 +1,10 @@
 package state;
 
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import model.Model;
 import shape.Shape;
-import state.drawing_ellipse_state.ReadToDrawFirstPointOfEllipse;
+import state.drawing_ellipse_state.ReadyToDrawFirstPointOfEllipse;
+import state.drawing_filled_ellipse.ReadyToDrawFirstPointOfFilledEllipse;
 import state.drawing_filled_rectangle.ReadyToDrawFirstPointOfFilledRectangle;
 import state.drawing_rectangle_state.ReadyToDrawFirstPointOfRectangle;
 
@@ -35,7 +35,7 @@ abstract public class State {
     }
 
     public State ellipseButtonPressed() {
-        return ReadToDrawFirstPointOfEllipse.getInstance();
+        return ReadyToDrawFirstPointOfEllipse.getInstance();
     }
 
     public State filledRectangleButtonPressed() {
@@ -43,8 +43,8 @@ abstract public class State {
     }
 
     public State filledEllipseButtonPressed() {
-        //TODO
-        return null;
+//        System.out.println("filled ellipse button pressed");
+        return ReadyToDrawFirstPointOfFilledEllipse.getInstance();
     }
 
     public State multipleLineButtonPressed() {
