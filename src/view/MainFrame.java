@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
     private ButtonForDrawing filledRectangleButton =
             new ButtonForDrawing("Filled Rectangle", "filledRectangleButtonPressed");
     private ButtonForDrawing filledEllipseButton =
-            new ButtonForDrawing("Filled Rectangle", "filledEllipseButtonPressed");
+            new ButtonForDrawing("Filled Ellipse", "filledEllipseButtonPressed");
     private ButtonForDrawing multipleLineSegmentButton =
             new ButtonForDrawing("Multiple Line Segment", "multipleLineButtonPressed");
     private ButtonForDrawing textBlockButton =
@@ -70,8 +70,13 @@ public class MainFrame extends JFrame {
         drawingPanel.addMouseWheelListener(drawingPanel.mouseAdapter);
         drawingPanel.addKeyListener(drawingPanel.keyAdapter);
         chooseModeButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        lineSegmentButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
         rectangleButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
         ellipseButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        filledRectangleButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        filledEllipseButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        multipleLineSegmentButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
+        textBlockButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
         saveButton.addActionListener(new SaveFileButtonListener());
         loadButton.addActionListener(new LoadFileButtonListener());
     }
@@ -126,10 +131,6 @@ public class MainFrame extends JFrame {
         frame.pack();
         frame.setVisible(true);
     }
-
-//    public void popupDialog(String message) {
-//
-//    }
 
     class ShapeListChangeListener implements PropertyChangeListener {
         @Override

@@ -44,4 +44,9 @@ abstract public class Shape implements Serializable {
             imageGraphics.setColor(color);
         }
     }
+
+    protected void fillShape(Graphics2D imageGraphics) {
+        imageGraphics.setStroke(new BasicStroke(lineWidth));
+        imageGraphics.setColor(color);
+    }
 }

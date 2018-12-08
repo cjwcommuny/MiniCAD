@@ -5,6 +5,7 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import model.Model;
 import shape.Shape;
 import state.drawing_ellipse_state.ReadToDrawFirstPointOfEllipse;
+import state.drawing_filled_rectangle.ReadyToDrawFirstPointOfFilledRectangle;
 import state.drawing_rectangle_state.ReadyToDrawFirstPointOfRectangle;
 
 import java.awt.*;
@@ -15,7 +16,10 @@ import java.lang.reflect.Method;
 abstract public class State {
     abstract public State mouseLeftClick(MouseEvent e);
     abstract public State mouseRightClick(MouseEvent e);
-    abstract public State mouseMove(MouseEvent e);
+
+    public State mouseMove(MouseEvent e) {
+        return this;
+    }
 
     public State chooseModeButtonPressed() {
         return Idle.getInstance();
@@ -35,8 +39,8 @@ abstract public class State {
     }
 
     public State filledRectangleButtonPressed() {
-        //TODO
-        return null;
+//        System.out.println("filled rectangle button pressed");
+        return ReadyToDrawFirstPointOfFilledRectangle.getInstance();
     }
 
     public State filledEllipseButtonPressed() {

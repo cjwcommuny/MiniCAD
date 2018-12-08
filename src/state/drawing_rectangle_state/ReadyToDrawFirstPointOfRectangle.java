@@ -31,8 +31,8 @@ public class ReadyToDrawFirstPointOfRectangle extends State {
         return Idle.getInstance();
     }
 
-    @Override
-    public State mouseMove(MouseEvent e) {
-        return ReadyToDrawFirstPointOfRectangle.getInstance();
-    }
+//    @Override
+//    public State mouseMove(MouseEvent e) {
+//        return ReadyToDrawFirstPointOfRectangle.getInstance();
+//    }
 }

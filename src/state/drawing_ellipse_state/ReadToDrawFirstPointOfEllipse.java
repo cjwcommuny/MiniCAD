@@ -28,8 +28,8 @@ public class ReadToDrawFirstPointOfEllipse extends State {
         return Idle.getInstance();
     }
 
-    @Override
-    public State mouseMove(MouseEvent e) {
-        return getInstance();
-    }
+//    @Override
+//    public State mouseMove(MouseEvent e) {
+//        return getInstance();
+//    }
 }
