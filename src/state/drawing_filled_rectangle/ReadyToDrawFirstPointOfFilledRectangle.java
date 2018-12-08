@@ -20,7 +20,6 @@ public class ReadyToDrawFirstPointOfFilledRectangle extends State {
         Point currentPoint = e.getPoint();
         FilledRectangle rectangle = new FilledRectangle(currentPoint, new Point(currentPoint));
         addShape(rectangle);
-//        System.out.println("filled rectangle mouse left click");
         return ReadyToDrawSecondPointOfFilledRectangle.getInstance();
     }
 
@@ -28,9 +27,4 @@ public class ReadyToDrawFirstPointOfFilledRectangle extends State {
     public State mouseRightClick(MouseEvent e) {
         return Idle.getInstance();
     }
-
-//    @Override
-//    public State mouseMove(MouseEvent e) {
-//        return getInstance();
-//    }
 }

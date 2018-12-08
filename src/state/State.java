@@ -6,6 +6,7 @@ import shape.Shape;
 import state.drawing_ellipse_state.ReadyToDrawFirstPointOfEllipse;
 import state.drawing_filled_ellipse.ReadyToDrawFirstPointOfFilledEllipse;
 import state.drawing_filled_rectangle.ReadyToDrawFirstPointOfFilledRectangle;
+import state.drawing_line_state.ReadyToDrawFirstPointOfLine;
 import state.drawing_rectangle_state.ReadyToDrawFirstPointOfRectangle;
 import state.drawing_text_state.ReadyToInputTextState;
 
@@ -29,8 +30,7 @@ abstract public class State {
     }
 
     public State lineButtonPressed() {
-        //TODO
-        return null;
+        return ReadyToDrawFirstPointOfLine.getInstance();
     }
 
     public State rectangleButtonPressed() {
@@ -46,7 +46,6 @@ abstract public class State {
     }
 
     public State filledEllipseButtonPressed() {
-//        System.out.println("filled ellipse button pressed");
         return ReadyToDrawFirstPointOfFilledEllipse.getInstance();
     }
 
@@ -61,7 +60,6 @@ abstract public class State {
 
     public State keyButtonReleased(int keyCode) {
         Shape currentShape = Model.getCurrentShape();
-//        System.out.println("key released");
         if (currentShape == null) {
             return this;
         }
@@ -106,7 +104,6 @@ abstract public class State {
         final double unitRate = 0.05;
         Shape shape = Model.getCurrentShape();
         if (shape != null) {
-//            System.out.println("change size");
             shape.changeSize(unitRate * notches);
             Model.shapeListChanged();
         }
