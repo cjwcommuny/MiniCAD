@@ -12,6 +12,10 @@ abstract public class Shape implements Serializable {
 
     public abstract boolean isInShape(Point point);
 
+    public int getLineWidth() {
+        return lineWidth;
+    }
+
     public void setLineWidth(int lineWidth) {
         this.lineWidth = lineWidth;
     }
@@ -19,6 +23,8 @@ abstract public class Shape implements Serializable {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    abstract public void move(Point direction);
 
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         if (isActivated) {

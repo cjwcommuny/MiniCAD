@@ -4,6 +4,7 @@ import shape.Shape;
 import state.Idle;
 import state.State;
 
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class Model {
+    private final static int LINE_WIDTH_STEP = 1;
+    private final static int SHAPE_MOVE_STEP = 5;
     public final static String SERIALIZE_EXTENSION = "ser";
     private static State currentState = new Idle();
     private static Shape currentShape;
@@ -70,6 +73,39 @@ public class Model {
     public static void removeShape() {
         shapeList.remove(currentShape);
         currentShape = null;
+        shapeListChanged();
+    }
+
+    public static void incrementLineWidthOfCurrentShape() {
+        int originalLineWidth = currentShape.getLineWidth();
+        currentShape.setLineWidth(originalLineWidth + LINE_WIDTH_STEP);
+        shapeListChanged();
+    }
+
+    public static void decrementLineWidthOfCurrentShape() {
+        int originalLineWidth = currentShape.getLineWidth();
+        currentShape.setLineWidth(originalLineWidth - LINE_WIDTH_STEP);
+        shapeListChanged();
+    }
+
+    public static void moveShapeUp() {
+        currentShape.move(new Point(0, -SHAPE_MOVE_STEP));
+        shapeListChanged();
+    }
+
+    public static void moveShapeDown() {
+        currentShape.move(new Point(0, SHAPE_MOVE_STEP));
+        shapeListChanged();
+    }
+
+    public static void moveShapeLeft() {
+        currentShape.move(new Point(-SHAPE_MOVE_STEP, 0));
+        shapeListChanged();
+    }
+
+    public static void moveShapeRight() {
+        currentShape.move(new Point(SHAPE_MOVE_STEP, 0));
+        shapeListChanged();
     }
 
     public static void saveShapes(String directory, String fileName) {

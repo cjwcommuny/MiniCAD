@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ListIterator;
 
+import static java.awt.event.KeyEvent.*;
+
 public class DrawingPanel extends JPanel {
     DrawingPanel() {
         setBackground(Color.WHITE);
@@ -84,26 +86,48 @@ public class DrawingPanel extends JPanel {
                 return;
             }
             super.keyTyped(e);
-            char keyChar = e.getKeyChar();
-            switch (keyChar) {
-                case '1':
+            int keyCode = e.getKeyCode();
+            switch (keyCode) {
+                case VK_1:
                     //default color
                     currentShape.setColor(Shape.NORMAL_COLOR);
                     break;
-                case '2':
+                case VK_2:
                     //red
                     currentShape.setColor(Color.RED);
                     break;
-                case '3':
+                case VK_3:
                     //blue
                     currentShape.setColor(Color.BLUE);
                     break;
-                case '4':
+                case VK_4:
                     //yellow
                     currentShape.setColor(Color.YELLOW);
                     break;
+                case VK_BACK_SPACE: case VK_DELETE:
+                    Model.removeShape();
+                    break;
+                case VK_F1:
+                    Model.incrementLineWidthOfCurrentShape();
+                    break;
+                case VK_F2:
+                    Model.decrementLineWidthOfCurrentShape();
+                    break;
+                case VK_UP:
+                    Model.moveShapeUp();
+                    break;
+                case VK_DOWN:
+                    Model.moveShapeDown();
+                    break;
+                case VK_LEFT:
+                    Model.moveShapeLeft();
+                    break;
+                case VK_RIGHT:
+                    Model.moveShapeRight();
+                    break;
                 default:
                     //default color
+                    System.out.println(keyCode);
                     currentShape.setColor(Shape.NORMAL_COLOR);
                     break;
             }

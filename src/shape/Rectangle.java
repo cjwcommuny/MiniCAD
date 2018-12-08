@@ -38,4 +38,14 @@ public class Rectangle extends Shape {
                 point.y >= leftTopCorner.y &&
                 point.y <= rightBottomCorner.y;
     }
+
+    @Override
+    public void move(Point direction) {
+        firstPoint.x += direction.x;
+        firstPoint.y += direction.y;
+        leftTopCorner.x += direction.x;
+        leftTopCorner.y += direction.y;
+        rightBottomCorner.x += direction.x;
+        rightBottomCorner.y += direction.y;
+    }
 }

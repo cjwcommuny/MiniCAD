@@ -12,4 +12,9 @@ public class Line extends Shape {
     public void render(Graphics2D imageGraphics, boolean isActivated) {
 
     }
+
+    @Override
+    public void move(Point direction) {
+
+    }
 }

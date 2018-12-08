@@ -4,6 +4,11 @@ import java.awt.*;
 
 public class Text extends Shape {
     @Override
+    public void move(Point direction) {
+
+    }
+
+    @Override
     public boolean isInShape(Point point) {
         return false;
     }

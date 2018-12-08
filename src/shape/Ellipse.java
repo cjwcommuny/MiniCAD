@@ -25,6 +25,16 @@ public class Ellipse extends Shape {
     }
 
     @Override
+    public void move(Point direction) {
+        firstPoint.x += direction.x;
+        firstPoint.y += direction.y;
+        leftTopCorner.x += direction.x;
+        leftTopCorner.y += direction.y;
+        rightBottomCorner.x += direction.x;
+        rightBottomCorner.y += direction.y;
+    }
+
+    @Override
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         super.render(imageGraphics, isActivated);
         int width = rightBottomCorner.x - leftTopCorner.x;
