@@ -2,25 +2,10 @@ package shape;
 
 import java.awt.*;
 
-public class Rectangle extends Shape {
-    private Point firstPoint;
-    private Point leftTopCorner;
-    private Point rightBottomCorner;
-
-    public void setSecondPoint(Point secondPoint) {
-        this.leftTopCorner = new Point(
-                Math.min(firstPoint.x, secondPoint.x),
-                Math.min(firstPoint.y, secondPoint.y)
-        );
-        this.rightBottomCorner = new Point(
-                Math.max(firstPoint.x, secondPoint.x),
-                Math.max(firstPoint.y, secondPoint.y)
-        );
-    }
+public class Rectangle extends RectangleFrame {
 
     public Rectangle(Point firstPoint, Point secondPoint) {
-        this.leftTopCorner = this.firstPoint = firstPoint;
-        this.rightBottomCorner = secondPoint;
+        super(firstPoint, secondPoint);
     }
 
     @Override
@@ -37,15 +22,5 @@ public class Rectangle extends Shape {
                 point.x <= rightBottomCorner.x &&
                 point.y >= leftTopCorner.y &&
                 point.y <= rightBottomCorner.y;
-    }
-
-    @Override
-    public void move(Point direction) {
-        firstPoint.x += direction.x;
-        firstPoint.y += direction.y;
-        leftTopCorner.x += direction.x;
-        leftTopCorner.y += direction.y;
-        rightBottomCorner.x += direction.x;
-        rightBottomCorner.y += direction.y;
     }
 }

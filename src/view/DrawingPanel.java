@@ -63,7 +63,10 @@ public class DrawingPanel extends JPanel {
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
             super.mouseWheelMoved(e);
-            //TODO
+            int notches = e.getWheelRotation();
+//            System.out.println("mouse wheel moved " + notches);
+            State newState = Model.getCurrentState().mouseWheelMoved(notches);
+            Model.setCurrentState(newState);
         }
 
         @Override

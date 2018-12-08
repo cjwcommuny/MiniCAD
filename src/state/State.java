@@ -58,6 +58,17 @@ abstract public class State {
         return this;
     }
 
+    public State mouseWheelMoved(int notches) {
+        final double unitRate = 0.05;
+        Shape shape = Model.getCurrentShape();
+        if (shape != null) {
+//            System.out.println("change size");
+            shape.changeSize(unitRate * notches);
+            Model.shapeListChanged();
+        }
+        return this;
+    }
+
     public void invoke(String methodName) {
         try {
             Method method = getClass().getMethod(methodName);

@@ -16,6 +16,8 @@ abstract public class Shape implements Serializable {
         return lineWidth;
     }
 
+    abstract public void changeSize(double rate);
+
     public void setLineWidth(int lineWidth) {
         this.lineWidth = lineWidth;
     }

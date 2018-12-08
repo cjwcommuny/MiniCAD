@@ -67,6 +67,7 @@ public class MainFrame extends JFrame {
     private void addListener() {
         drawingPanel.addMouseListener(drawingPanel.mouseAdapter);
         drawingPanel.addMouseMotionListener(drawingPanel.mouseAdapter);
+        drawingPanel.addMouseWheelListener(drawingPanel.mouseAdapter);
         drawingPanel.addKeyListener(drawingPanel.keyAdapter);
         chooseModeButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());
         rectangleButton.addActionListener(new ButtonForDrawing.DrawingButtonListener());

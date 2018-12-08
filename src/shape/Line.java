@@ -14,6 +14,11 @@ public class Line extends Shape {
     }
 
     @Override
+    public void changeSize(double rate) {
+
+    }
+
+    @Override
     public void move(Point direction) {
 
     }

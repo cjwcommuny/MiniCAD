@@ -4,6 +4,11 @@ import java.awt.*;
 
 public class Text extends Shape {
     @Override
+    public void changeSize(double rate) {
+
+    }
+
+    @Override
     public void move(Point direction) {
 
     }
