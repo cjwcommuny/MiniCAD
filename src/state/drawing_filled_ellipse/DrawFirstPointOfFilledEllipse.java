@@ -7,8 +7,8 @@ import state.State;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class ReadyToDrawFirstPointOfFilledEllipse extends State {
-    private static State thisState = new ReadyToDrawFirstPointOfFilledEllipse();
+public class DrawFirstPointOfFilledEllipse extends State {
+    private static State thisState = new DrawFirstPointOfFilledEllipse();
 
     public static State getInstance() {
         return thisState;
@@ -19,7 +19,7 @@ public class ReadyToDrawFirstPointOfFilledEllipse extends State {
         Point currentPoint = e.getPoint();
         FilledEllipse ellipse = new FilledEllipse(currentPoint, new Point(currentPoint));
         addShape(ellipse);
-        return ReadyToDrawSecondPointOfFilledEllipse.getInstance();
+        return DrawSecondPointOfFilledEllipse.getInstance();
     }
 
     @Override

@@ -12,7 +12,7 @@ public class LineSegment extends Shape {
         return new Point((int) firstPoint.getX(), (int) firstPoint.getY());
     }
 
-    public Point getSecondPoint() {
+    Point getSecondPoint() {
         int secondPointX;
         int secondPointY;
         if (unitVector.getX() == Double.POSITIVE_INFINITY
@@ -31,8 +31,6 @@ public class LineSegment extends Shape {
 
     @Override
     public void render(Graphics2D imageGraphics, boolean isActivated) {
-//        System.out.println(unitVector.getX() + " " + unitVector.getY());
-//        System.out.println((unitVector.getY() * length) / (unitVector.getX() * length));
         super.render(imageGraphics, isActivated);
         Point secondPoint = getSecondPoint();
         Point firstPointInt = getFirstPoint();
@@ -72,7 +70,7 @@ public class LineSegment extends Shape {
 
     @Override
     public boolean isInShape(Point point) {
-        //TODO: complext shape frame
+        //TODO: complex shape frame
         Point secondPoint = getSecondPoint();
         Point firstPointInt = getFirstPoint();
         return point.x >= Math.min(firstPointInt.x, secondPoint.x)
@@ -83,20 +81,6 @@ public class LineSegment extends Shape {
 
     @Override
     public void changeSize(double rate) {
-//        Point center = new Point(
-//                (firstPoint.x + secondPoint.x) / 2,
-//                (firstPoint.y + secondPoint.y) / 2
-//        );
-//        double tan = ((double) firstPoint.y - secondPoint.y) / (firstPoint.x - secondPoint.x);
-//        firstPoint.x = (int) ((firstPoint.x - center.x) * (1 + rate)) + center.x;
-//        firstPoint.y = (int) ((firstPoint.x - center.x) * tan) + center.y;
-//        secondPoint.x = (int) ((secondPoint.x - center.x) * (1 + rate)) + center.x;
-//        secondPoint.y = (int) ((secondPoint.x - center.x) * tan) + center.y;
-//        double tan = ((double) firstPoint.y - secondPoint.y) / (firstPoint.x - secondPoint.x);
-//        double tempSecondPointX = firstPoint.x + (secondPoint.x - firstPoint.x) * (1 + rate);
-//        secondPoint.y = firstPoint.y + (int) ((tempSecondPointX - firstPoint.x) * tan);
-//        secondPoint.x = (int) tempSecondPointX;
-//        System.out.println(tan);
         length = length * (1 + rate);
 
     }
@@ -104,9 +88,5 @@ public class LineSegment extends Shape {
     @Override
     public void move(Point direction) {
         firstPoint.setLocation(firstPoint.getX() + direction.x, firstPoint.getY() + direction.y);
-//        firstPoint.x += direction.x;
-//        firstPoint.y += direction.y;
-//        secondPoint.x += direction.x;
-//        secondPoint.y += direction.y;
     }
 }

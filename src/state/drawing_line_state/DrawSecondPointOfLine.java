@@ -7,8 +7,8 @@ import state.State;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class ReadyToDrawSecondPointOfLine extends State {
-    private static State thisState = new ReadyToDrawSecondPointOfLine();
+public class DrawSecondPointOfLine extends State {
+    private static State thisState = new DrawSecondPointOfLine();
 
     public static State getInstance() {
         return thisState;
@@ -19,12 +19,12 @@ public class ReadyToDrawSecondPointOfLine extends State {
         Point point = e.getPoint();
         LineSegment line = (LineSegment) Model.getCurrentShape();
         line.setSecondPoint(point);
-        return ReadyToDrawFirstPointOfLine.getInstance();
+        return DrawFirstPointOfLine.getInstance();
     }
 
     @Override
     public State mouseRightClick(MouseEvent e) {
-        return ReadyToDrawFirstPointOfLine.getInstance();
+        return DrawFirstPointOfLine.getInstance();
     }
 
     @Override

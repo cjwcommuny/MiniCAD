@@ -3,24 +3,31 @@ package state;
 
 import model.Model;
 import shape.Shape;
-import shape.Text;
-import state.drawing_ellipse_state.ReadyToDrawFirstPointOfEllipse;
-import state.drawing_filled_ellipse.ReadyToDrawFirstPointOfFilledEllipse;
-import state.drawing_filled_rectangle.ReadyToDrawFirstPointOfFilledRectangle;
-import state.drawing_line_state.ReadyToDrawFirstPointOfLine;
-import state.drawing_multipleline_state.ReadyToDrawInitialPointOfMutipleLine;
-import state.drawing_polygon_state.ReadyToDrawInitialPointOfPolygon;
-import state.drawing_rectangle_state.ReadyToDrawFirstPointOfRectangle;
+import state.drawing_ellipse_state.DrawFirstPointOfEllipse;
+import state.drawing_filled_ellipse.DrawFirstPointOfFilledEllipse;
+import state.drawing_filled_rectangle.DrawFirstPointOfFilledRectangle;
+import state.drawing_line_state.DrawFirstPointOfLine;
+import state.drawing_multipleline_state.DrawInitialPointOfMultipleLine;
+import state.drawing_polygon_state.DrawInitialPointOfPolygon;
+import state.drawing_rectangle_state.DrawFirstPointOfRectangle;
 import state.drawing_text_state.ReadyToInputTextState;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.awt.event.KeyEvent.*;
 
-//TODO: singleton ?
 abstract public class State {
+    private static Map<Integer, Runnable> keyPressedMap = new HashMap<>();
+
+    static
+    {
+        initializeKeyPressedMap();
+    }
+
     abstract public State mouseLeftClick(MouseEvent e);
     abstract public State mouseRightClick(MouseEvent e);
 
@@ -33,32 +40,32 @@ abstract public class State {
     }
 
     public State lineButtonPressed() {
-        return ReadyToDrawFirstPointOfLine.getInstance();
+        return DrawFirstPointOfLine.getInstance();
     }
 
     public State rectangleButtonPressed() {
-        return ReadyToDrawFirstPointOfRectangle.getInstance();
+        return DrawFirstPointOfRectangle.getInstance();
     }
 
     public State ellipseButtonPressed() {
-        return ReadyToDrawFirstPointOfEllipse.getInstance();
+        return DrawFirstPointOfEllipse.getInstance();
     }
 
     public State filledRectangleButtonPressed() {
-        return ReadyToDrawFirstPointOfFilledRectangle.getInstance();
+        return DrawFirstPointOfFilledRectangle.getInstance();
     }
 
     public State filledEllipseButtonPressed() {
-        return ReadyToDrawFirstPointOfFilledEllipse.getInstance();
+        return DrawFirstPointOfFilledEllipse.getInstance();
     }
 
 
     public State multipleLineButtonPressed() {
-        return ReadyToDrawInitialPointOfMutipleLine.getInstance();
+        return DrawInitialPointOfMultipleLine.getInstance();
     }
 
     public State polygonButtonPressed() {
-        return ReadyToDrawInitialPointOfPolygon.getInstance();
+        return DrawInitialPointOfPolygon.getInstance();
     }
 
     public State textButtonPressed() {
@@ -66,56 +73,22 @@ abstract public class State {
     }
 
     public State keyButtonReleased(int keyCode) {
-        Shape currentShape = Model.getCurrentShape();
-        if (currentShape == null) {
-            return this;
-        }
-        switch (keyCode) {
-            case VK_F3:
-                //default color
-                currentShape.setColor(Shape.NORMAL_COLOR);
-                break;
-            case VK_F4:
-                //red
-                currentShape.setColor(Color.RED);
-                break;
-            case VK_F5:
-                //blue
-                currentShape.setColor(Color.BLUE);
-                break;
-            case VK_F6:
-                //yellow
-                currentShape.setColor(Color.YELLOW);
-                break;
-            case VK_BACK_SPACE: case VK_DELETE:
-                Model.removeShape();
-                break;
-            case VK_F1:
-                Model.incrementLineWidthOfCurrentShape();
-                break;
-            case VK_F2:
-                Model.decrementLineWidthOfCurrentShape();
-                break;
-            case VK_F7:
-                if (currentShape.getClass() == Text.class) {
-//                    System.out.println("text");
-                    Text textShape = (Text) currentShape;
-                    textShape.setFontStyle("Times");
-                    Model.shapeListChanged();
-                }
-                break;
-            case VK_F8:
-                if (currentShape.getClass() == Text.class) {
-                    Text textShape = (Text) currentShape;
-                    textShape.setFontStyle("Menlo");
-                    Model.shapeListChanged();
-                }
-                break;
-            default:
-                break;
-        }
+        keyPressedMap.getOrDefault(keyCode, () -> {}).run();
         Model.shapeListChanged();
         return this;
+    }
+
+    private static void initializeKeyPressedMap() {
+        keyPressedMap.put(VK_F1, () -> Model.incrementLineWidthOfCurrentShape());
+        keyPressedMap.put(VK_F2, () -> Model.decrementLineWidthOfCurrentShape());
+        keyPressedMap.put(VK_F3, () -> Model.setColor(Shape.NORMAL_COLOR));
+        keyPressedMap.put(VK_F4, () -> Model.setColor(Color.RED));
+        keyPressedMap.put(VK_F5, () -> Model.setColor(Color.BLUE));
+        keyPressedMap.put(VK_F6, () -> Model.setColor(Color.YELLOW));
+        keyPressedMap.put(VK_F7, () -> Model.setTextFontStyle("Times"));
+        keyPressedMap.put(VK_F8, () -> Model.setTextFontStyle("Menlo"));
+        keyPressedMap.put(VK_BACK_SPACE, () -> Model.removeShape());
+        keyPressedMap.put(VK_DELETE, () -> Model.removeShape());
     }
 
     public State mouseDragged(MouseEvent e, Point direction) {
@@ -138,7 +111,6 @@ abstract public class State {
             State newState = (State) method.invoke(this);
             Model.setCurrentState(newState);
         } catch (Exception e) {
-            //TODO: need to change?
             System.err.println(e.getMessage());
         }
     }

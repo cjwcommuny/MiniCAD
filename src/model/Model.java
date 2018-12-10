@@ -1,6 +1,7 @@
 package model;
 
 import shape.Shape;
+import shape.Text;
 import state.Idle;
 import state.State;
 
@@ -137,6 +138,19 @@ public class Model {
         } catch (ClassNotFoundException e) {
             System.err.println(e.getMessage());
         }
+    }
 
+    public static void setTextFontStyle(String style) {
+        if (currentShape != null && currentShape.getClass() == Text.class) {
+            Text textShape = (Text) currentShape;
+            textShape.setFontStyle(style);
+            Model.shapeListChanged();
+        }
+    }
+
+    public static void setColor(Color color) {
+        if (currentShape != null) {
+            currentShape.setColor(color);
+        }
     }
 }

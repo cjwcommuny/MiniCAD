@@ -1,14 +1,15 @@
-package state.drawing_filled_rectangle;
+package state.drawing_rectangle_state;
 
 import model.Model;
-import shape.FilledRectangle;
+import shape.Rectangle;
+import state.Idle;
 import state.State;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class ReadyToDrawSecondPointOfFilledRectangle extends State {
-    private static State thisState = new ReadyToDrawSecondPointOfFilledRectangle();
+public class DrawSecondPointOfRectangle extends State {
+    private static DrawSecondPointOfRectangle thisState = new DrawSecondPointOfRectangle();
 
     public static State getInstance() {
         return thisState;
@@ -18,24 +19,31 @@ public class ReadyToDrawSecondPointOfFilledRectangle extends State {
     public State mouseLeftClick(MouseEvent e) {
         Point currentPoint = e.getPoint();
         setRightCornerPointOfRectangle(currentPoint);
-        return ReadyToDrawFirstPointOfFilledRectangle.getInstance();
+        return DrawFirstPointOfRectangle.getInstance();
     }
 
     @Override
     public State mouseRightClick(MouseEvent e) {
-        return ReadyToDrawFirstPointOfFilledRectangle.getInstance();
+        return DrawFirstPointOfRectangle.getInstance();
     }
 
     @Override
     public State mouseMove(MouseEvent e) {
         Point currentPoint = e.getPoint();
+        //TODO: assert?
         setRightCornerPointOfRectangle(currentPoint);
-        return getInstance();
+        return DrawSecondPointOfRectangle.getInstance();
     }
 
     private void setRightCornerPointOfRectangle(Point point) {
-        FilledRectangle rectangle = (FilledRectangle) Model.getCurrentShape();
+        Rectangle rectangle = (Rectangle) Model.getCurrentShape();
         rectangle.setSecondPoint(point);
         Model.shapeListChanged();
+    }
+
+    @Override
+    public State rectangleButtonPressed() {
+        //TODO: cancel draw current shape, delete currentShape?
+        return Idle.getInstance();
     }
 }

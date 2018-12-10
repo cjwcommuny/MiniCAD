@@ -1,37 +1,55 @@
 package shape;
 
 import java.awt.*;
+import java.util.List;
 
-public class Polygon extends MultipleLines {
-    private java.awt.Polygon polygon = new java.awt.Polygon();
+public class Polygon extends Shape {
+    private MultipleLines multipleLines = new MultipleLines();
+
+    private List<LineSegment> getLineList() {
+        return multipleLines.getLineList();
+    }
+
+    @Override
+    public void changeSize(double rate) {
+        multipleLines.changeSize(rate);
+    }
+
+    @Override
+    public void move(Point direction) {
+        multipleLines.move(direction);
+    }
 
     @Override
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         super.render(imageGraphics, isActivated);
-        for (LineSegment line: lineList) {
+        for (LineSegment line: getLineList()) {
             line.render(imageGraphics, isActivated);
         }
-        if (lineList.size() >= 1) {
-            LineSegment firstLine = getFirstLine();
-            LineSegment lastLine = getLastLine();
+        drawLastLine(imageGraphics);
+    }
+
+    private void drawLastLine(Graphics2D imageGraphics) {
+        if (getLineList().size() >= 1) {
+            LineSegment firstLine = multipleLines.getFirstLine();
+            LineSegment lastLine = multipleLines.getLastLine();
             imageGraphics.drawLine(firstLine.getFirstPoint().x,
                     firstLine.getFirstPoint().y,
                     lastLine.getSecondPoint().x,
                     lastLine.getSecondPoint().y);
         }
-//        System.out.println("draw polygon");
-        imageGraphics.draw(polygon);
     }
 
     @Override
     public boolean isInShape(Point point) {
-//        for (LineSegment line: lineList) {
-//            polygon.addPoint(line.getFirstPoint().x, line.getFirstPoint().y);
-//        }
-//        if (lineList.size() >= 1) {
-//            polygon.addPoint(getLastLine().getSecondPoint().x, getLastLine().getSecondPoint().y);
-//        }
-//        return polygon.contains(point);
-        return super.isInShape(point);
+        return multipleLines.isInShape(point);
+    }
+
+    public void addEdge(LineSegment line) {
+        multipleLines.addLine(line);
+    }
+
+    public LineSegment getLastEdge() {
+        return multipleLines.getLastLine();
     }
 }

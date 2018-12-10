@@ -1,6 +1,5 @@
 package state.drawing_rectangle_state;
 
-import model.Model;
 import shape.Rectangle;
 import state.Idle;
 import state.State;
@@ -8,8 +7,8 @@ import state.State;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class ReadyToDrawFirstPointOfRectangle extends State {
-    private static ReadyToDrawFirstPointOfRectangle thisState = new ReadyToDrawFirstPointOfRectangle();
+public class DrawFirstPointOfRectangle extends State {
+    private static DrawFirstPointOfRectangle thisState = new DrawFirstPointOfRectangle();
 
     public static State getInstance() {
         return thisState;
@@ -21,7 +20,7 @@ public class ReadyToDrawFirstPointOfRectangle extends State {
         //TODO: should use different point?
         Rectangle rectangle = new Rectangle(currentPoint, new Point(currentPoint));
         addShape(rectangle);
-        return ReadyToDrawSecondPointOfRectangle.getInstance();
+        return DrawSecondPointOfRectangle.getInstance();
     }
 
 
@@ -33,6 +32,6 @@ public class ReadyToDrawFirstPointOfRectangle extends State {
 
 //    @Override
 //    public State mouseMove(MouseEvent e) {
-//        return ReadyToDrawFirstPointOfRectangle.getInstance();
+//        return DrawFirstPointOfRectangle.getInstance();
 //    }
 }

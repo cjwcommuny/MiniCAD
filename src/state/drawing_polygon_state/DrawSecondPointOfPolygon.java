@@ -4,7 +4,6 @@ import model.Model;
 import shape.Polygon;
 import shape.LineSegment;
 import state.State;
-import state.drawing_multipleline_state.ReadyToDrawSecondPointOfMutipleLine;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -12,13 +11,13 @@ import java.awt.event.MouseEvent;
 import static com.sun.webkit.event.WCKeyEvent.VK_RETURN;
 import static java.awt.event.KeyEvent.VK_ENTER;
 
-public class ReadyToDrawSecondPointOfPolygon extends State {
+public class DrawSecondPointOfPolygon extends State {
     @Override
     public State mouseRightClick(MouseEvent e) {
         return getInstance();
     }
 
-    private static State thisState = new ReadyToDrawSecondPointOfPolygon();
+    private static State thisState = new DrawSecondPointOfPolygon();
 
     public static State getInstance() {
         return thisState;
@@ -28,14 +27,14 @@ public class ReadyToDrawSecondPointOfPolygon extends State {
     public State mouseLeftClick(MouseEvent e) {
         Point point = e.getPoint();
         Polygon polygon = (Polygon) Model.getCurrentShape();
-        polygon.addLine(new LineSegment(point, new Point(point)));
-        return ReadyToDrawFirstPointOfPolygon.getInstance();
+        polygon.addEdge(new LineSegment(point, new Point(point)));
+        return DrawFirstPointOfPolygon.getInstance();
     }
 
     @Override
     public State keyButtonReleased(int keyCode) {
         if (keyCode == VK_RETURN || keyCode == VK_ENTER) {
-            return ReadyToDrawInitialPointOfPolygon.getInstance();
+            return DrawInitialPointOfPolygon.getInstance();
         } else {
             return getInstance();
         }
@@ -45,7 +44,7 @@ public class ReadyToDrawSecondPointOfPolygon extends State {
     public State mouseMove(MouseEvent e) {
         Point point = e.getPoint();
         Polygon polygon = (Polygon) Model.getCurrentShape();
-        LineSegment line = polygon.getLastLine();
+        LineSegment line = polygon.getLastEdge();
         line.setSecondPoint(point);
         Model.shapeListChanged();
         return getInstance();

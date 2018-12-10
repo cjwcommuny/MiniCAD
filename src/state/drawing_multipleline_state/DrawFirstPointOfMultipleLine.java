@@ -11,8 +11,8 @@ import java.awt.event.MouseEvent;
 import static com.sun.webkit.event.WCKeyEvent.VK_RETURN;
 import static java.awt.event.KeyEvent.VK_ENTER;
 
-public class ReadyToDrawFirstPointOfMutipleLine extends State {
-    private static State thisState = new ReadyToDrawFirstPointOfMutipleLine();
+public class DrawFirstPointOfMultipleLine extends State {
+    private static State thisState = new DrawFirstPointOfMultipleLine();
 
     public static State getInstance() {
         return thisState;
@@ -23,7 +23,7 @@ public class ReadyToDrawFirstPointOfMutipleLine extends State {
         Point point = e.getPoint();
         MultipleLines multipleLines = (MultipleLines) Model.getCurrentShape();
         multipleLines.addLine(new LineSegment(point, new Point(point)));
-        return ReadyToDrawSecondPointOfMutipleLine.getInstance();
+        return DrawSecondPointOfMultipleLine.getInstance();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ReadyToDrawFirstPointOfMutipleLine extends State {
     public State keyButtonReleased(int keyCode) {
         //TODO: redundant
         if (keyCode == VK_RETURN || keyCode == VK_ENTER) {
-            return ReadyToDrawInitialPointOfMutipleLine.getInstance();
+            return DrawInitialPointOfMultipleLine.getInstance();
         } else {
             return getInstance();
         }

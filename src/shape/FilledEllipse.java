@@ -3,7 +3,7 @@ package shape;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-public class FilledEllipse extends Ellipse {
+public class FilledEllipse extends Ellipse implements Fillable {
     public FilledEllipse(Point firstPoint, Point secondPoint) {
         super(firstPoint, secondPoint);
     }
@@ -15,8 +15,8 @@ public class FilledEllipse extends Ellipse {
     }
 
     @Override
-    protected void fillShape(Graphics2D imageGraphics) {
-        super.fillShape(imageGraphics);
+    public void fillShape(Graphics2D imageGraphics) {
+        super.setDefaultGraphics(imageGraphics);
         int width = rightBottomCorner.x - leftTopCorner.x;
         int height = rightBottomCorner.y - leftTopCorner.y;
         Ellipse2D ellipse = new Ellipse2D.Double(leftTopCorner.x, leftTopCorner.y, width, height);

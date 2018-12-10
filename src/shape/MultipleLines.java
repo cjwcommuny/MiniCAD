@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.LinkedList;
 
 public class MultipleLines extends Shape {
-    protected List<LineSegment> lineList = new LinkedList<>();
+    List<LineSegment> lineList = new LinkedList<>();
 
     public void addLine(LineSegment line) {
         lineList.add(line);
+    }
+
+    public List<LineSegment> getLineList() {
+        return lineList;
     }
 
     public LineSegment getLastLine() {

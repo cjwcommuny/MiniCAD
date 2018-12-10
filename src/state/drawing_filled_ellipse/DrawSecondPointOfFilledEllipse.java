@@ -1,14 +1,14 @@
-package state.drawing_ellipse_state;
+package state.drawing_filled_ellipse;
 
 import model.Model;
-import shape.Ellipse;
+import shape.FilledEllipse;
 import state.State;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class ReadyToDrawSecondPointOfEllipse extends State {
-    private static ReadyToDrawSecondPointOfEllipse thisState = new ReadyToDrawSecondPointOfEllipse();
+public class DrawSecondPointOfFilledEllipse extends State {
+    private static State thisState = new DrawSecondPointOfFilledEllipse();
 
     public static State getInstance() {
         return thisState;
@@ -18,18 +18,12 @@ public class ReadyToDrawSecondPointOfEllipse extends State {
     public State mouseLeftClick(MouseEvent e) {
         Point currentPoint = e.getPoint();
         setRightCornerPointOfEllipse(currentPoint);
-        return ReadyToDrawFirstPointOfEllipse.getInstance();
-    }
-
-    private void setRightCornerPointOfEllipse(Point currentPoint) {
-        Ellipse ellipse = (Ellipse) Model.getCurrentShape();
-        ellipse.setSecondPoint(currentPoint);
-        Model.shapeListChanged();
+        return DrawFirstPointOfFilledEllipse.getInstance();
     }
 
     @Override
     public State mouseRightClick(MouseEvent e) {
-        return ReadyToDrawFirstPointOfEllipse.getInstance();
+        return DrawFirstPointOfFilledEllipse.getInstance();
     }
 
     @Override
@@ -38,5 +32,11 @@ public class ReadyToDrawSecondPointOfEllipse extends State {
         //TODO: assert?
         setRightCornerPointOfEllipse(currentPoint);
         return getInstance();
+    }
+
+    private void setRightCornerPointOfEllipse(Point currentPoint) {
+        FilledEllipse ellipse = (FilledEllipse) Model.getCurrentShape();
+        ellipse.setSecondPoint(currentPoint);
+        Model.shapeListChanged();
     }
 }
