@@ -52,4 +52,10 @@ public class Polygon extends Shape {
     public LineSegment getLastEdge() {
         return multipleLines.getLastLine();
     }
+
+    @Override
+    public void setColor(Color color) {
+        super.setColor(color);
+        multipleLines.setColor(color);
+    }
 }

@@ -152,5 +152,6 @@ public class Model {
         if (currentShape != null) {
             currentShape.setColor(color);
         }
+        shapeListChanged();
     }
 }

@@ -25,7 +25,6 @@ public class MultipleLines extends Shape {
 
     @Override
     public void render(Graphics2D imageGraphics, boolean isActivated) {
-        super.render(imageGraphics, isActivated);
         for (LineSegment line: lineList) {
             line.render(imageGraphics, isActivated);
         }
@@ -60,6 +59,14 @@ public class MultipleLines extends Shape {
     public void move(Point direction) {
         for (LineSegment line: lineList) {
             line.move(direction);
+        }
+    }
+
+    @Override
+    public void setColor(Color color) {
+        super.setColor(color);
+        for (LineSegment line: lineList) {
+            line.setColor(getColor());
         }
     }
 }

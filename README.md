@@ -1,2 +1,22 @@
-# MiniCAD
-An implementation of mini CAD in Java
+# MiniCAD Report 
+
+陈佳伟 
+
+3160102178
+
+3160102178@zju.edu.cn
+
+## 实现的功能
+
+
+
+## 运行方法
+
+
+
+## 效果
+
+
+
+## 实现方法
+

@@ -26,6 +26,10 @@ abstract public class Shape implements Serializable {
         this.color = color;
     }
 
+    protected Color getColor() {
+        return color;
+    }
+
     abstract public void move(Point direction);
 
     public void render(Graphics2D imageGraphics, boolean isActivated) {
