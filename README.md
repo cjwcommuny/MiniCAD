@@ -155,6 +155,8 @@ D -->|MouseMove| D
 D -->|LeftMouseClick| C
 ```
 
+
+
 * 显示文字
 
 ```mermaid
@@ -182,11 +184,93 @@ abstract class State {
 }
 ```
 
-`State` 作为抽象基类，拥有
+`State` 作为抽象基类，声明了所有可能的输入， 如 `mouseLeftClick` 、`mouseRightClick` 等。具体的状态继承了这个抽象基类并实现这些抽象方法。
+
+当一个输入到来时，可以使用语句 `newState = currentState.input()` 来进行状态转换。
+
+例如，对于处理鼠标的方法：
+
+```java
+if (isLeftMouseButton(event)) {
+    newState = currentState.mouseLeftClick(event);
+    setCurrentState(newState);
+}
+```
+
+
 
 ## 具体实现方法
 
+### 处理输入
 
+以鼠标输入为例，可以声明一个 `MouseAdapter` 的子类，并覆盖需要的方法：
+
+```java
+MouseAdapter mouseAdapter = new MouseAdapter() {
+    @Override
+    public void mouseClicked(MouseEvent e) {...}
+    
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {...}
+    
+    ...
+}
+```
+
+并且把 `mouseAdapter` 与控件进行绑定：
+
+```java
+drawingPanel.addMouseListener(mouseAdapter);
+...
+```
+
+
+
+### Observer 模式
+
+可以使用 Java bean 提供的 `PropertyChangeListener` 来实现监听效果，一旦一个属性发生改变，就通知置顶方法进行处理。
+
+本实验中，主要应用在一旦 `shapeList` 中的图形发生改变，那么就通知 `drawingPanel` 重绘画面。
+
+首先声明 listener：
+
+```java
+PropertyChangeSupport listeners = new PropertyChangeSupport(...);
+```
+
+并且在修改属性时添加 `firePropertyChange`，以进行通知
+
+```java
+listeners.firePropertyChange(prop, oldValue, newValue);
+```
+
+继承 `PropertyChangeListener` ，并进行覆盖方法：
+
+```java
+class ShapeListChangeListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+			...
+        }
+    }
+```
+
+并将监听者与被监听者绑定：
+
+```java
+listeners.addPropertyChangeListener(listener);
+```
+
+
+
+### 绘图方法
+
+绘图方法遍历整个 `shapeList` ，并调用每个 `Shape` 对象的 `render()` 方法进行绘图。
+
+具体的 `render()` 方法可以直接调用 Swing 库的绘画方法。
 
 ## 遇到的问题与实现方法
 
+* 数值精度问题
+
+  最开始存储直线时，使用的是 Swing 的 `Point` 类存储直线两点，其中的坐标为整数值，但是在测试时发现由于要进行大小放缩，会产生小数的情况，而由于存储的是整数，所以会导致精度损失，多次放缩后可能导致直线位置/方向发生改变。最终解决方法是，内部存储使用 `double` ，但是当外部使用 `getter` 获取点的坐标时再再转换为整型。
