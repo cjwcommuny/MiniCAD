@@ -27,6 +27,7 @@ public class MultipleLines extends Shape {
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         for (LineSegment line: lineList) {
             line.setColor(super.getColor());
+            line.setLineWidth(super.getLineWidth());
             line.render(imageGraphics, isActivated);
         }
     }

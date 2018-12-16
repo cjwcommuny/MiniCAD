@@ -24,6 +24,7 @@ public class Polygon extends Shape {
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         super.render(imageGraphics, isActivated);
         for (LineSegment line: getLineList()) {
+            line.setLineWidth(super.getLineWidth());
             line.setColor(super.getColor());
             line.render(imageGraphics, isActivated);
         }
@@ -35,6 +36,7 @@ public class Polygon extends Shape {
             LineSegment firstLine = multipleLines.getFirstLine();
             LineSegment lastLine = multipleLines.getLastLine();
             LineSegment lineSegment = new LineSegment(firstLine.getFirstPoint(), lastLine.getSecondPoint());
+            lineSegment.setLineWidth(super.getLineWidth());
             lineSegment.setColor(super.getColor());
             lineSegment.render(imageGraphics, isActivated);
         }
