@@ -36,7 +36,7 @@ public class DrawSecondPointOfPolygon extends State {
         if (keyCode == VK_RETURN || keyCode == VK_ENTER) {
             return DrawInitialPointOfPolygon.getInstance();
         } else {
-            return getInstance();
+            return super.keyButtonReleased(keyCode);
         }
     }
 

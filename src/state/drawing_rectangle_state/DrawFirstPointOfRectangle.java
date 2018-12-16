@@ -23,15 +23,9 @@ public class DrawFirstPointOfRectangle extends State {
         return DrawSecondPointOfRectangle.getInstance();
     }
 
-
-
     @Override
     public State mouseRightClick(MouseEvent e) {
         return Idle.getInstance();
     }
 
-//    @Override
-//    public State mouseMove(MouseEvent e) {
-//        return DrawFirstPointOfRectangle.getInstance();
-//    }
 }

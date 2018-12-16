@@ -24,19 +24,19 @@ public class Polygon extends Shape {
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         super.render(imageGraphics, isActivated);
         for (LineSegment line: getLineList()) {
+            line.setColor(super.getColor());
             line.render(imageGraphics, isActivated);
         }
-        drawLastLine(imageGraphics);
+        drawLastLine(imageGraphics, isActivated);
     }
 
-    private void drawLastLine(Graphics2D imageGraphics) {
+    private void drawLastLine(Graphics2D imageGraphics, boolean isActivated) {
         if (getLineList().size() >= 1) {
             LineSegment firstLine = multipleLines.getFirstLine();
             LineSegment lastLine = multipleLines.getLastLine();
-            imageGraphics.drawLine(firstLine.getFirstPoint().x,
-                    firstLine.getFirstPoint().y,
-                    lastLine.getSecondPoint().x,
-                    lastLine.getSecondPoint().y);
+            LineSegment lineSegment = new LineSegment(firstLine.getFirstPoint(), lastLine.getSecondPoint());
+            lineSegment.setColor(super.getColor());
+            lineSegment.render(imageGraphics, isActivated);
         }
     }
 

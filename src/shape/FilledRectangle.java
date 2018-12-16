@@ -16,8 +16,8 @@ public class FilledRectangle extends Rectangle implements Fillable {
     @Override
     public void fillShape(Graphics2D imageGraphics) {
         super.setDefaultGraphics(imageGraphics);
-        int width = rightBottomCorner.x - leftTopCorner.x;
-        int height = rightBottomCorner.y - leftTopCorner.y;
-        imageGraphics.fillRect(leftTopCorner.x, leftTopCorner.y, width, height);
+        int width = (int) (rightBottomCorner.getX() - leftTopCorner.getX());
+        int height = (int) (rightBottomCorner.getY() - leftTopCorner.getY());
+        imageGraphics.fillRect((int) leftTopCorner.getX(), (int) leftTopCorner.getY(), width, height);
     }
 }

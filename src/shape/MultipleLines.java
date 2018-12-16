@@ -26,6 +26,7 @@ public class MultipleLines extends Shape {
     @Override
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         for (LineSegment line: lineList) {
+            line.setColor(super.getColor());
             line.render(imageGraphics, isActivated);
         }
     }

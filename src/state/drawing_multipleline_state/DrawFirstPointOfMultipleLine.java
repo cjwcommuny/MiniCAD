@@ -44,11 +44,10 @@ public class DrawFirstPointOfMultipleLine extends State {
 
     @Override
     public State keyButtonReleased(int keyCode) {
-        //TODO: redundant
         if (keyCode == VK_RETURN || keyCode == VK_ENTER) {
             return DrawInitialPointOfMultipleLine.getInstance();
         } else {
-            return getInstance();
+            return super.keyButtonReleased(keyCode);
         }
     }
 }

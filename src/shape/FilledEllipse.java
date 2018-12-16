@@ -17,9 +17,9 @@ public class FilledEllipse extends Ellipse implements Fillable {
     @Override
     public void fillShape(Graphics2D imageGraphics) {
         super.setDefaultGraphics(imageGraphics);
-        int width = rightBottomCorner.x - leftTopCorner.x;
-        int height = rightBottomCorner.y - leftTopCorner.y;
-        Ellipse2D ellipse = new Ellipse2D.Double(leftTopCorner.x, leftTopCorner.y, width, height);
+        int width = (int) (rightBottomCorner.getX() - leftTopCorner.getX());
+        int height = (int) (rightBottomCorner.getY() - leftTopCorner.getY());
+        Ellipse2D ellipse = new Ellipse2D.Double(leftTopCorner.getX(), leftTopCorner.getY(), width, height);
         imageGraphics.fill(ellipse);
     }
 }

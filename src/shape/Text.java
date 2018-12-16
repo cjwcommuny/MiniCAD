@@ -2,13 +2,14 @@ package shape;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Point2D;
 
 public class Text extends Shape {
-    private int fontSize = 15;
-    private Point position;
+    private double fontSize = 15;
+    private Point2D position;
     private String fontName = "Menlo";
     private int fontStyle = Font.PLAIN;
-    private Font font = new Font(fontName, fontStyle, fontSize);
+    private Font font = new Font(fontName, fontStyle, (int) fontSize);
     private String text = "this is a text box";
     private static int textFramePadding = 5;
     private static int textFrameStrokeLineWidth = 1;
@@ -17,7 +18,7 @@ public class Text extends Shape {
 
     public void setFontStyle(String fontName) {
         this.fontName = fontName;
-        this.font = new Font(fontName, fontStyle, fontSize);
+        this.font = new Font(fontName, fontStyle, (int) fontSize);
     }
 
     public Text(Point position) {
@@ -35,14 +36,13 @@ public class Text extends Shape {
 
     @Override
     public void changeSize(double rate) {
-        fontSize = (int) (fontSize * (1 + rate));
-        font = new Font(fontName, fontStyle, fontSize);
+        fontSize = fontSize * (1 + rate);
+        font = new Font(fontName, fontStyle, (int) fontSize);
     }
 
     @Override
     public void move(Point direction) {
-        position.x += direction.x;
-        position.y += direction.y;
+        position.setLocation(position.getX() + direction.x, position.getY() + direction.y);
     }
 
     @Override
@@ -55,16 +55,17 @@ public class Text extends Shape {
 
     @Override
     public void render(Graphics2D imageGraphics, boolean isActivated) {
+        imageGraphics.setColor(NORMAL_COLOR);
         FontMetrics fm = imageGraphics.getFontMetrics(font);
         textRectangle = fm.getStringBounds(text, imageGraphics);
         rectangleFrame = new Rectangle2D.Double(
-                position.x - textFramePadding,
-                position.y - textRectangle.getHeight() - textFramePadding,
+                position.getX() - textFramePadding,
+                position.getY() - textRectangle.getHeight() - textFramePadding,
                 textRectangle.getWidth() + 2 * textFramePadding,
                 textRectangle.getHeight() + 2 * textFramePadding
         );
         imageGraphics.setFont(font);
-        imageGraphics.drawString(text, position.x, position.y);
+        imageGraphics.drawString(text, (int) position.getX(), (int) position.getY());
         if (isActivated) {
             imageGraphics.setStroke(new BasicStroke(textFrameStrokeLineWidth));
             imageGraphics.draw(rectangleFrame);

@@ -1,11 +1,12 @@
 package shape;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 abstract class RectangleFrame extends Shape {
-    protected Point firstPoint;
-    protected Point leftTopCorner;
-    protected Point rightBottomCorner;
+    protected Point2D firstPoint;
+    protected Point2D leftTopCorner;
+    protected Point2D rightBottomCorner;
 
     protected RectangleFrame(Point firstPoint, Point secondPoint) {
         this.leftTopCorner = this.firstPoint = firstPoint;
@@ -14,12 +15,12 @@ abstract class RectangleFrame extends Shape {
 
     public void setSecondPoint(Point secondPoint) {
         this.leftTopCorner = new Point(
-                Math.min(firstPoint.x, secondPoint.x),
-                Math.min(firstPoint.y, secondPoint.y)
+                (int) Math.min(firstPoint.getX(), secondPoint.x),
+                (int) Math.min(firstPoint.getY(), secondPoint.y)
         );
         this.rightBottomCorner = new Point(
-                Math.max(firstPoint.x, secondPoint.x),
-                Math.max(firstPoint.y, secondPoint.y)
+                (int) Math.max(firstPoint.getX(), secondPoint.x),
+                (int) Math.max(firstPoint.getY(), secondPoint.y)
         );
     }
 
@@ -28,23 +29,25 @@ abstract class RectangleFrame extends Shape {
 
     @Override
     public void changeSize(double rate) {
-        Point center = new Point((rightBottomCorner.x + leftTopCorner.x) /2,
-                (rightBottomCorner.y + leftTopCorner.y) / 2);
-        firstPoint.x = (int) ((firstPoint.x - center.x) * (1 + rate)) + center.x;
-        firstPoint.y = (int) ((firstPoint.y - center.y) * (1 + rate)) + center.y;
-        leftTopCorner.x = (int) ((leftTopCorner.x - center.x) * (1 + rate)) + center.x;
-        leftTopCorner.y = (int) ((leftTopCorner.y - center.y) * (1 + rate)) + center.y;
-        rightBottomCorner.x = (int) ((rightBottomCorner.x - center.x) * (1 + rate)) + center.x;
-        rightBottomCorner.y = (int) ((rightBottomCorner.y - center.y) * (1 + rate)) + center.y;
+        Point center = new Point(
+                (int) (rightBottomCorner.getX() + leftTopCorner.getX()) /2,
+                (int) (rightBottomCorner.getY() + leftTopCorner.getY()) / 2
+        );
+        firstPoint.setLocation(((firstPoint.getX() - center.x) * (1 + rate)) + center.x,
+                ((firstPoint.getY() - center.y) * (1 + rate)) + center.y);
+        leftTopCorner.setLocation(((leftTopCorner.getX() - center.x) * (1 + rate)) + center.x,
+                ((leftTopCorner.getY() - center.y) * (1 + rate)) + center.y);
+        rightBottomCorner.setLocation(((rightBottomCorner.getX() - center.x) * (1 + rate)) + center.x,
+                ((rightBottomCorner.getY() - center.y) * (1 + rate)) + center.y);
     }
 
     @Override
     public void move(Point direction) {
-        firstPoint.x += direction.x;
-        firstPoint.y += direction.y;
-        leftTopCorner.x += direction.x;
-        leftTopCorner.y += direction.y;
-        rightBottomCorner.x += direction.x;
-        rightBottomCorner.y += direction.y;
+        firstPoint.setLocation(firstPoint.getX() + direction.x,
+                firstPoint.getY() + direction.y);
+        leftTopCorner.setLocation(leftTopCorner.getX() + direction.x,
+                leftTopCorner.getY() + direction.y);
+        rightBottomCorner.setLocation(rightBottomCorner.getX() + direction.x,
+                rightBottomCorner.getY() + direction.y);
     }
 }

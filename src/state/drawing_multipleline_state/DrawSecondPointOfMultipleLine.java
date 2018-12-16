@@ -43,11 +43,10 @@ public class DrawSecondPointOfMultipleLine extends State {
 
     @Override
     public State keyButtonReleased(int keyCode) {
-        System.out.println(keyCode);
         if (keyCode == VK_RETURN || keyCode == VK_ENTER) {
             return DrawInitialPointOfMultipleLine.getInstance();
         } else {
-            return getInstance();
+            return super.keyButtonReleased(keyCode);
         }
     }
 }

@@ -24,6 +24,7 @@ public class Model {
 
     public static void setCurrentShape(Shape currentShape) {
         Model.currentShape = currentShape;
+        shapeListChanged();
     }
 
     public static void setShapeList(List<Shape> shapeList) {

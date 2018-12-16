@@ -11,16 +11,16 @@ public class Rectangle extends RectangleFrame {
     @Override
     public void render(Graphics2D imageGraphics, boolean isActivated) {
         super.render(imageGraphics, isActivated);
-        int width = rightBottomCorner.x - leftTopCorner.x;
-        int height = rightBottomCorner.y - leftTopCorner.y;
-        imageGraphics.drawRect(leftTopCorner.x, leftTopCorner.y, width, height);
+        int width = (int) (rightBottomCorner.getX() - leftTopCorner.getX());
+        int height = (int) (rightBottomCorner.getY() - leftTopCorner.getY());
+        imageGraphics.drawRect((int) leftTopCorner.getX(), (int) leftTopCorner.getY(), width, height);
     }
 
     @Override
     public boolean isInShape(Point point) {
-        return point.x >= leftTopCorner.x &&
-                point.x <= rightBottomCorner.x &&
-                point.y >= leftTopCorner.y &&
-                point.y <= rightBottomCorner.y;
+        return point.x >= leftTopCorner.getX() &&
+                point.x <= rightBottomCorner.getX() &&
+                point.y >= leftTopCorner.getY() &&
+                point.y <= rightBottomCorner.getY();
     }
 }
